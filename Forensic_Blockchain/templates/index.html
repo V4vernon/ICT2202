@@ -11,24 +11,19 @@
         <input type="password" class="form-control rounded-left" name="password" placeholder="Password" id="password"
                required>
     </div>
+    <input type="hidden" name="token" value="{{ token }}">
     <div class="form-group">
         <button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
     </div>
     <div class="form-group d-md-flex">
         <div class="w-50">
-            <label id="rememberme" class="checkbox-wrap checkbox-primary">Remember Me
-                <input type="checkbox" name="rememberme" checked>
-                <span class="checkmark"></span>
-            </label>
+            <a href="{{ url_for('register') }}">Register here</a>
         </div>
         <div class="w-50 text-md-right">
-            <a href="#">Forgot Password ?</a>
+            <a href="{{ url_for('forgotpassword')}}">Forgot Password ?</a>
         </div>
     </div>
     <div class="msg">{{ msg }}</div>
-    <div class="w-50">
-        <a href="{{ url_for('register') }}">Register here</a>
-    </div>
 </form>
 {% endblock %}
 
