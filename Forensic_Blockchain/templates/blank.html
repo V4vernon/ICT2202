@@ -2,6 +2,9 @@
 {% block title %} Profile {% endblock %}
 {% block content %}
 
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
     <a class="nav-link" href="{{ url_for('home') }}">
@@ -24,7 +27,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Profile:</h6>
             <a class="collapse-item" href="{{ url_for('profile') }}">Show Profile</a>
-            <a class="collapse-item" href="{{ url_for('profile') }}">Edit Profile</a>
+            <a class="collapse-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
         </div>
     </div>
 </li>
@@ -39,6 +42,29 @@
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Blank</span></a>
 </li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+{% if role == 'Admin' %}
+<!-- Nav Item - Admin -->
+<li class="nav-item">
+    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
+       aria-expanded="true"
+       aria-controls="collapseTwo">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span>Accounts</span></a>
+    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+         data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Profile:</h6>
+            <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
+            <a class="collapse-item" href="{{ url_for('admin_account') }}">Add Accounts</a>
+        </div>
+    </div>
+</li>
+{% endif %}
+
 {% endblock %}
 
 {% block user %}{{ username }}{% endblock %}

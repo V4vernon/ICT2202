@@ -328,5 +328,86 @@ def page_not_found(error):
     return render_template('404.html', title='404'), 404
 
 
+# Admin logged-in check function
+def admin_loggedin():
+    if 'loggedin' in session and session['role'] == 'Admin':
+        # admin logged-in
+        return True
+    # admin not logged-in return false
+    return False
+
+
+# Admin Page
+@app.route('/admin/', methods=['GET', 'POST'])
+def admin():
+    # Check if admin is logged-in
+    if not admin_loggedin():
+        return redirect(url_for('login'))
+    msg = ''
+    # Retrieve all accounts from the database
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM accounts')
+    accounts = cursor.fetchall()
+    return render_template('admin/index.html', username=session['username'], accounts=accounts)
+
+
+@app.route('/admin/account/<int:id>', methods=['GET', 'POST'])
+@app.route('/admin/account', methods=['GET', 'POST'], defaults={'id': None})
+def admin_account(id):
+    # Check if admin is logged-in
+    if not admin_loggedin():
+        return redirect(url_for('login'))
+    page = 'Create'
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # Default input account values
+    account = {
+        'username': '',
+        'password': '',
+        'email': '',
+        'activation_code': '',
+        'rememberme': '',
+        'role': 'Member'
+    }
+    roles = ['Member', 'Admin'];
+    # GET request ID exists, edit account
+    if id:
+        # Edit an existing account
+        page = 'Edit'
+        # Retrieve account by ID with the GET request ID
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', (id,))
+        account = cursor.fetchone()
+        if request.method == 'POST' and 'submit' in request.form:
+            # update account
+            password = account['password']
+            if account['password'] != request.form['password']:
+                hash = request.form['password'] + app.secret_key
+                hash = hashlib.sha1(hash.encode())
+                password = hash.hexdigest();
+            cursor.execute(
+                'UPDATE accounts SET username = %s, password = %s, email = %s, activation_code = %s, rememberme = %s, '
+                'role = %s WHERE id = %s',
+                (request.form['username'], password, request.form['email'], request.form['activation_code'],
+                 request.form['rememberme'], request.form['role'], id,))
+            mysql.connection.commit()
+            return redirect(url_for('admin'))
+        if request.method == 'POST' and 'delete' in request.form:
+            # delete account
+            cursor.execute('DELETE FROM accounts WHERE id = %s', (id,))
+            mysql.connection.commit()
+            return redirect(url_for('admin'))
+    if request.method == 'POST' and request.form['submit']:
+        # Create new account
+        hash = request.form['password'] + app.secret_key
+        hash = hashlib.sha1(hash.encode())
+        password = hash.hexdigest();
+        cursor.execute(
+            'INSERT INTO accounts (username,password,email,activation_code,rememberme,role) VALUES (%s,%s,%s,%s,%s,%s)',
+            (request.form['username'], password, request.form['email'], request.form['activation_code'],
+             request.form['rememberme'], request.form['role'],))
+        mysql.connection.commit()
+        return redirect(url_for('admin'))
+    return render_template('admin/account.html', account=account, page=page, roles=roles)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

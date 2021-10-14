@@ -1,0 +1,73 @@
+{% extends "admin/base.html" %}
+{% block title %} Accounts {% endblock %}
+{% block content %}
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Profile -->
+<li class="nav-item">
+    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
+       aria-expanded="true"
+       aria-controls="collapseTwo">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span>Accounts</span></a>
+    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+         data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Profile:</h6>
+            <a class="collapse-item active" href="{{ url_for('admin') }}">Show Accounts</a>
+            <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
+        </div>
+    </div>
+</li>
+
+{% endblock %}
+
+{% block user %}{{ username }}{% endblock %}
+{% block content1 %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Account</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Account Details</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Username</td>
+                        <td class="responsive-hidden">Password</td>
+                        <td class="responsive-hidden">Email</td>
+                        <td class="responsive-hidden">Activation Code</td>
+                        <td class="responsive-hidden">Role</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if not accounts %}
+                    <tr>
+                        <td colspan="8" style="text-align:center;">There are no accounts</td>
+                    </tr>
+                    {% else %}
+                    {% for account in accounts %}
+                    <tr class="details" >
+                        <td>{{ account['id'] }}</td>
+                        <td>{{ account['username'] }}</td>
+                        <td class="responsive-hidden" style="word-break:break-all;">{{ account['password'] }}</td>
+                        <td class="responsive-hidden">{{ account['email'] }}</td>
+                        <td class="responsive-hidden">{{ account['activation_code'] }}</td>
+                        <td class="responsive-hidden">{{ account['role'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+{% endblock %}
