@@ -318,7 +318,7 @@ def blank():
     # Check if user is loggedin
     if 'loggedin' in session:
         # User is loggedin show them the home page
-        return render_template('blank.html', username=session['username'])
+        return render_template('blank.html', username=session['username'], role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -406,7 +406,7 @@ def admin_account(id):
              request.form['rememberme'], request.form['role'],))
         mysql.connection.commit()
         return redirect(url_for('admin'))
-    return render_template('admin/account.html', account=account, page=page, roles=roles)
+    return render_template('admin/account.html', username=session['username'], account=account, page=page, roles=roles)
 
 
 if __name__ == '__main__':
