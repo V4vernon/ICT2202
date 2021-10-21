@@ -1,8 +1,14 @@
-from web3 import Web3, IPCProvider, HTTPProvider
-from web3.logs import STRICT, IGNORE, DISCARD, WARN
-from web3.middleware import geth_poa_middleware
+from brownie import *
+p = project.load("brownie", name="BrownieProject")
+p.load_config()
+from brownie.project.BrownieProject import *
+from brownie.network import priority_fee, max_fee, web3
+#from web3 import Web3, IPCProvider, HTTPProvider
+#from web3.logs import STRICT, IGNORE, DISCARD, WARN
+#from web3.middleware import geth_poa_middleware
 import json
 import asyncio
+import time
 
 def print_transaction(tx, w3):
   print("=============================================================")
@@ -58,72 +64,58 @@ def decode_contract_data(tx, w3):
   else:
     print("input: {0}".format(tx["input"]))
     
-def handle_event(event):
-    print(event.hex())
-
-async def log_loop(event_filter, poll_interval):
-    while True:
-        for event in event_filter.get_new_entries():
-            handle_event(event)
-        await asyncio.sleep(poll_interval)
-
 def main():
-  # w3 = Web3(IPCProvider("~/ByteABlock/node1/geth.ipc"))
-  w3 = Web3(HTTPProvider("http://10.7.0.6:8501"))
+  network.connect("Block-testnet")
+  #ByteABlock.deploy({'from':accounts[0], 'gas_price': 0})
 
-  w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+  # w3 = Web3(HTTPProvider("http://127.0.0.1:8501"))
 
-  print(w3.clientVersion)
+  # w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
-  # w3 = Web3(Web3.HTTPProvider('http://localhost:8501'))
+  # print(ByteABlock[0].abi)
 
-  print(w3.eth.get_block('latest'))
-  print()
-  latest_tx = w3.eth.get_transaction_by_block('latest', 0)
+  print(web3.clientVersion)
+  latest = web3.eth.block_number
+  latest_tx = web3.eth.get_transaction_by_block(latest, 0)
   tx_hash = latest_tx["hash"]
-  receipt = w3.eth.get_transaction_receipt(tx_hash)
-  f = open("/home/works/Desktop/abi.json")
-  abi = json.load(f)
-  f.close()
-  ByteABlock = w3.eth.contract(address="0xd5a26D595026cDDB18D326bD33c042240475595c", abi=abi)
-  processed_log = ByteABlock.events.evidenceAdded().processReceipt(receipt)
-  print(processed_log)
-  
-  print(w3.eth.accounts)
-  print()
-  print(w3.fromWei(w3.eth.get_balance('0xf1f849FF49b54d449FF2681E61a4A5d2fAF231a8'), "ether"))
 
-  # sender = "0xf1f849FF49b54d449FF2681E61a4A5d2fAF231a8"
-  # receiver = "0x816266387273Eba271b6A20EF228b17504e0fbc8"
+  rf = open("abi.json", "r")
+  abi = json.load(rf)
+  rf.close()
+  contract = web3.eth.contract(address="0x44fe55eb077ac62A467a1A8522415C255bb0C6Cd", abi=abi)
+  add_item_filter = contract.events.evidenceAdded.createFilter(fromBlock=0, argument_filters={"_caseId":1})
+  change_filter = contract.events.statusChanged.createFilter(fromBlock=0, argument_filters={"_caseId": 1, "_evidId": 1})
 
-  # amount = w3.toWei(1, 'ether')
+  # Get information from the transactionReceipt Object
+  # tx = chain.get_transaction(tx_hash)
+  # print(tx.contract_name)
+  # print(tx.fn_name)
+  # print(ByteABlock[0].decode_input(tx.input))
+  # print(tx.events)
+  # print(tx.logs)
+  # print(tx.status)
 
-  # w3.eth.send_transaction({
-  #   'to': receiver,
-  #   'from': sender,
-  #   'value': amount
-  # })
+  # Export application binary interface of contract
+  # with open("abi.json", "w") as f:
+  #   json.dump(ByteABlock[0].abi, f, indent=4)
+  # tx = chain.get_transaction("0x6ec70e97e93f6b81ca9f76f9747d7dfb63dd2cf280dc029b308c190e25bc46e1")
+  # print(tx)
+  # print(tx.events)
+  ByteABlock[0].addEvidenceItem(1,2,1,"SIT","4523agvc","Storage","4673","WD SN550","In Transit","","Device is operational", {'from': accounts[0], 'gas_price':1})
+  evidence = ByteABlock[0].centralStore(1,1)
+  print(evidence)
+  ByteABlock[0].modifyEvidenceStatus(1,1,2,"For Storage","Check-In for Storage",{'from': accounts[0], 'gas_price':1})
+  ByteABlock[0].modifyEvidenceStatus(1,1,1,"For Analysis","Check-In for Analysis",{'from': accounts[0], 'gas_price':1})
+  ByteABlock[0].modifyEvidenceStatus(1,2,1,"For Analysis","Check-In for Analysis",{'from': accounts[0], 'gas_price':1})
+  # time.sleep(5)
+  evidence1 = ByteABlock[0].centralStore(1,1)
+  evidence2 = ByteABlock[0].centralStore(1,2)
+  print(evidence1)
+  print(evidence2)
 
-  # fil = w3.eth.filter({'address': '0xf1f849FF49b54d449FF2681E61a4A5d2fAF231a8'})
-  # w3.eth.uninstall_filter(fil.filter_id)
-
-  latest = w3.eth.block_number
-  for i in range(0,latest):
-    block = w3.eth.get_block(latest - i)
-    print_block(block)
-    tx = w3.eth.get_transaction_by_block(latest - i, 0)
-    print_transaction(tx, w3)
-    print()
-    
-  block_filter = w3.eth.filter('latest')
-  loop = asyncio.get_event_loop()
-  try:
-        loop.run_until_complete(
-            asyncio.gather(
-                log_loop(block_filter, 2)))
-  finally:
-        loop.close()
+  print(add_item_filter.get_all_entries())
+  print(change_filter.get_all_entries())
+  # ByteABlock[0].addEvidenceItem(1,6,6,"SIT","3452gwrt","Storage","8911","WD SN550","Good","In Transit","NIL", {'from': accounts[0]})
 
 if __name__ == "__main__":
   main()
-
