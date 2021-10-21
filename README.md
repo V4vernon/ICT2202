@@ -1,7 +1,10 @@
 # Home of what powers Byte-A-Block
 Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to look around and make yourself at home.
 
-## How to add a network to brownie
+## Brownie Stuff
+### Initialize new brownie project
+`brownie init`
+### Add a network
 `brownie networks add live VPN host=http://10.7.0.6:8501 chainid=10117 name="VPN Network"`
 
 ## Geth Debug
