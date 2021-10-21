@@ -1,5 +1,14 @@
 # Home of what powers Byte-A-Block
-Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to look around, though there are no docs now unfortunately
+Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to look around and make yourself at home.
 
+## How to add a network to brownie
+`brownie networks add live VPN host=http://10.7.0.6:8501 chainid=10117 name="VPN Network"`
+
+## Geth Debug
+```
+geth attach geth.ipc -exec admin.nodeInfo.enode
+geth attach geth.ipc -exec admin.peers
+geth attach geth.ipc -exec admin.addPeer("0x...")
+```
 
 
