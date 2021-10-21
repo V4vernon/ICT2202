@@ -1,6 +1,9 @@
 # Home of what powers Byte-A-Block
 Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to look around and make yourself at home.
 
+## Setup
+Make sure you have eth-brownie and geth installed
+
 ## Brownie Stuff
 ### Initialize new brownie project
 `brownie init`
