@@ -17,8 +17,8 @@ contract ByteABlock {
     
     mapping(uint => mapping(uint => evidenceItem)) public centralStore;
     
-    event evidenceAdded(uint indexed _caseId, uint indexed _evidId, uint _handlerId, string _currStatus, string indexed _purpose, uint256 date);
-    event statusChanged(uint indexed _caseId, uint indexed _evidId, uint _handlerId, string _currStatus, string indexed _purpose, uint256 date);
+    event evidenceAdded(uint indexed _caseId, uint indexed _evidId, uint indexed _handlerId, string _currStatus, string _purpose, uint256 date);
+    event statusChanged(uint indexed _caseId, uint indexed _evidId, uint indexed _handlerId, string _currStatus, string _purpose, uint256 date);
     
     function addEvidenceItem(
         uint _caseId, uint _evidId, uint _handlerId,
@@ -38,4 +38,5 @@ contract ByteABlock {
     }
     
 }
+
 
