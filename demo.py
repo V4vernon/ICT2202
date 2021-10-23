@@ -77,7 +77,7 @@ contract_w3 = web3.eth.contract(address="0x1433bE399CF5a9C44B9C76bc148CA188dCaFA
 add_item_filter = contract_w3.events.evidenceAdded.createFilter(fromBlock=1, argument_filters={"_caseId":1})
 change_filter = contract_w3.events.statusChanged.createFilter(fromBlock=1, argument_filters={"_caseId": 1, "_evidId": 1})
 
-# Get the results that you want after setting up the filters, results will differ based on what filter is it for, and results are retrieved
+# Get the results that you want after setting up the filters, results will differ based on what filter is it for, and when results are retrieved
 # Use get_new_entries() to only get new changes since the block specified in fromBlock
 # Use get_all_entries() to get all changes since fromBlock specified in filter
 # Reference web3.py documentations on how to call these in a loop, best in an asynchronous manner
