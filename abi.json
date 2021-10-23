@@ -15,7 +15,7 @@
                 "type": "uint256"
             },
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "uint256",
                 "name": "_handlerId",
                 "type": "uint256"
@@ -27,7 +27,7 @@
                 "type": "string"
             },
             {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "string",
                 "name": "_purpose",
                 "type": "string"
@@ -58,7 +58,7 @@
                 "type": "uint256"
             },
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "uint256",
                 "name": "_handlerId",
                 "type": "uint256"
@@ -70,7 +70,7 @@
                 "type": "string"
             },
             {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "string",
                 "name": "_purpose",
                 "type": "string"
