@@ -1,7 +1,11 @@
 #!/bin/bash
+echo "Please ensure you are in the correct directory prior to running this script"
+echo -e "Your current directory is $PWD\n"
 echo Please Choose what you would like to do:
 echo "1) Setup Blockchain"
 echo "2) Run nodes"
+echo "3) List nodes you are connected to"
+echo "4) List your enode id"
 read initResponse
 
 if [[ $initResponse == 1 ]];
@@ -84,4 +88,14 @@ then
 			echo "Configuration file is empty"
 		fi
 	fi
+elif [[ $initResponse == 3 ]];
+then
+	echo Listing nodes you are connected to...
+	geth attach node1/geth.ipc --exec admin.peers
+elif [[ $initResponse == 4 ]];
+then
+	echo "Listing your enode number (for connection purposes)..."
+	IFS="?" read -ra enodeValue <<< $(geth attach node1/geth.ipc --exec admin.nodeInfo.enode)
+	echo ${enodeValue[0]}\" 
 fi
+
