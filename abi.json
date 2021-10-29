@@ -29,7 +29,7 @@
             {
                 "indexed": false,
                 "internalType": "string",
-                "name": "_purpose",
+                "name": "_serialNo",
                 "type": "string"
             },
             {
@@ -67,6 +67,12 @@
                 "indexed": false,
                 "internalType": "string",
                 "name": "_currStatus",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "_imageHash",
                 "type": "string"
             },
             {
@@ -232,6 +238,11 @@
             {
                 "internalType": "string",
                 "name": "_newStatus",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_imageHash",
                 "type": "string"
             },
             {
