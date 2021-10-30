@@ -200,4 +200,9 @@ More details of connecting to the network can be found in demo.py
 
 Finally note down where the contract is deployed to, so we can get the contract in the future.
 
+*Sample of test contract deployment*
+
+![ByteABlock Deploy](https://user-images.githubusercontent.com/20734215/139530925-d5811b5c-5134-473c-8cd7-eccddb064fa3.PNG)
+
+
 
