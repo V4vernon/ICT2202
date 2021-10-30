@@ -23,7 +23,7 @@ Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to loo
 
     `sudo apt install wireguard`
     
-    As this is not crucial to the workings of the project, as in the ethereum nodes can also connect on public IPs, you can find more information about how to setup a wireguard VPN network below, and while it is for 20.04, it works well on 18.04 too.
+    As this is not crucial to the workings of the project, as in ethereum nodes can also connect on public IPs, you can find more information about how to setup a wireguard VPN network below, and while it is for 20.04, it works well on 18.04 too.
     
     https://www.cyberciti.biz/faq/ubuntu-20-04-set-up-wireguard-vpn-server/
     
