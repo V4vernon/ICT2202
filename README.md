@@ -11,7 +11,7 @@ Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to loo
     
 2) Python 3.7
 
-    `sudo apt install python3.7`
+    `sudo apt install python3.7 python3.7-dev`
 
 3) Eth-Brownie (Python Ethereum Smart Contract Framework)
 
