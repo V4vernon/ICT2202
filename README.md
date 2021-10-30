@@ -172,7 +172,7 @@ Verify that you are connected to the rest of the nodes by running chain_setup, a
 If you don't see all the nodes that are supposed to be in your network, check your static-nodes.json file in the previous step, or if that fails run the actual geth command from the chain_setup file directly in the console with verbosity 5, and observe the output for errors.
 
 ```
-geth --datadir node1 --syncmode full --port 30320 --nat extip:10.7.0.15 --netrestrict 10.7.0.0/24 --http --http.addr 10.7.0.15 --http.port 8520 --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid 4862 --miner.gasprice 0 --unlock '0x7084A419E19BB40A74485701D5C5c0Bac55bd071' --password node1/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
+geth --datadir node1 --syncmode full --port xxxxx --nat extip:10.7.0.x --netrestrict 10.7.0.0/24 --http --http.addr 10.7.0.x --http.port 85xx --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid xxxx --miner.gasprice 0 --unlock '0x12345678' --password node1/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
 ```
 
 ### Using the brownie and web3.py APIs
@@ -182,7 +182,7 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
     `mkdir brownie && cd brownie && brownie init`
 2) Then tell brownie about the network we created earlier
 
-    `brownie networks add live byteablock host=http://10.7.0.15:8520 chainid=4862 name="ByteABlock Network"`
+    `brownie networks add live byteablock host=http://10.7.0.x:85xx chainid=xxxx name="ByteABlock Network"`
     
 3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains comments as to how to use the APIs
 
