@@ -111,7 +111,7 @@ Enter 2 for export genesis configuration, followed by enter when asked whether y
 ![genesis_export](https://user-images.githubusercontent.com/20734215/139522913-89caede7-3c42-4fad-b996-1df5fd97b996.PNG)
 
 
-Before we sum up, open your genesis file and remove all the precompiled addresses under alloc, or put it simply those public addresses that you did not add manually earlier. Then change the gas limit to 0xe4e1c0 (15000000). Your completed genesis file should look like the byteablock.json present in this repository.
+Last but not least, open your genesis file and remove all the precompiled addresses under alloc, or put it simply those public addresses that you did not add manually earlier. Then change the gas limit to 0xe4e1c0 (15000000). Your completed genesis file should look like the byteablock.json present in this repository.
 
 This sums up how to create the genesis file, which only needs to be done once. Next, we need to initialize the nodes with the genesis file we created
 
