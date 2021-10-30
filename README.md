@@ -28,6 +28,8 @@ Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to loo
     https://www.cyberciti.biz/faq/ubuntu-20-04-set-up-wireguard-vpn-server/
     
 ### Setting Up
+
+#### Getting Wallet Public Addresses
 Once you have installed the prerequisities, we can move on to the actual node setup. Given the need for security as our chain involves the storage of information with regards to the physical media containing digital evidence, we opted to add nodes manually to the chain and turn off autodiscovery for nodes
 
 We wrote a bash script to simplify the setup process somewhat, especially some of the repetitive steps.
@@ -53,8 +55,9 @@ The script would ask you if you want to initialize the nodes, which you can safe
 
 We are only using node1, so ignore the second wallet address. Note this down, as it would be used in the generation of the genesis file.
 
-**Repeat the above steps on every single node that should be added to the network, and collect their public wallet addresses**
+*NOTE: Repeat the above steps on every single node that should be added to the network, and collect their public wallet addresses*
 
+#### Creating the project genesis file
 Thirdly, once we have all the public wallet addresses of each of the nodes in hand. We can then generate the genesis file.
 
 To do so, run puppeth, which comes with the ethereum (geth) package we installed earlier
@@ -72,6 +75,63 @@ Next, you would see a screen offering options you can perform. Select Option 2 (
 Afterwhich, select Option 1 (Create new genesis from scratch)
 
 ![Create_New_Genesis](https://user-images.githubusercontent.com/20734215/139519535-9ff1c734-5fb7-4bab-ad4c-f322bcde8698.PNG)
+
+Following Which, select Option 2 (Clique - proof-of-authority)
+
+![Consensus_Engine](https://user-images.githubusercontent.com/20734215/139520749-008a3d11-4e4d-402d-8e29-a7edd4b5abfd.PNG)
+
+For how many seconds should blocks take, enter 0 (meaning that a new block would only be created when there is a new transaction)
+
+![Block_Seconds](https://user-images.githubusercontent.com/20734215/139520881-caa023c0-c3fb-4cbf-bedf-ed02fc8726e6.PNG)
+
+For which accounts are allowed to seal, specify the public wallet addresses of all the nodes, an example for one node is shown below
+
+![Sealer_Accounts](https://user-images.githubusercontent.com/20734215/139520989-fc7476c5-9700-4f03-8185-f9217f01f235.PNG)
+
+Do the same thing as above for which accounts should be prefunded
+
+![PreFund](https://user-images.githubusercontent.com/20734215/139521037-58264e29-b5f1-43f2-b037-897aa05fbc36.PNG)
+
+For whether precompile addresses should be funded, enter yes, though these accounts would be deleted later
+
+For chain/network ID specify one of your choosing, or enter to accept a randomly generated ID
+
+![Chain_ID](https://user-images.githubusercontent.com/20734215/139521114-887ad0b5-9eb3-4e70-a347-ed8093e81e2f.PNG)
+
+Finally, you're done inputting the relevant details for the genesis file. Yay. You should be brought back to this familiar looking screen
+
+![genesis_process_complete](https://user-images.githubusercontent.com/20734215/139521158-ede895d9-0ab2-4665-9700-5242672b90d7.PNG)
+
+Enter 2 to manage your genesis block
+
+Enter 2 for export genesis configuration, followed by enter when asked whether you want to write the files to current directory
+
+![Export_Genesis_1](https://user-images.githubusercontent.com/20734215/139521229-d5768f7a-d9ed-4280-b17e-3de192b70e25.PNG)
+
+![export_genesis_2](https://user-images.githubusercontent.com/20734215/139521286-19d2be21-95b7-4ed2-9e37-259b568fe418.PNG)
+
+But wait we're not done yet, to finish everything open your genesis file and remove all the precompiled addresses under alloc, or put it simply those public addresses that you did not add manually earlier. Then change the gas limit to 0xe4e1c0 (15000000). Your completed genesis file should look like the byteablock.json present in this repository.
+
+This sums up how to create the genesis file, which only needs to be done once. Next, we need to initialize the nodes with the genesis file we created
+
+#### Initializing the Genesis Block on nodes
+
+To initialize the genesis block for the node, let's go back and use the handy chain_setup script. Similarly select option 1, but this time for the question of whether you want to initialize genesis block, enter yes.
+
+![init_genesis](https://user-images.githubusercontent.com/20734215/139521593-cc6e0953-0a6f-4f9c-b9d6-88f7769925ad.PNG)
+
+*NOTE: This has to be performed on every single node to be added to the network*
+
+
+
+
+
+
+
+
+
+
+
 
 
 
