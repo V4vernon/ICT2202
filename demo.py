@@ -115,12 +115,17 @@ changed_items = change_filter.get_all_entries()
 # print("Case ID: {}".format(added_items[0]["args"]["_caseId"]))
 
 # COMMENTED OUT AS THERE IS NO EVIDENCE IN THE CHAIN YET
-# print("Getting image hash...")
-# image_hash = added_items[0]["_imageHash"]
-# print(image_hash)
-# print(get_image_hash(evt_tx_hash, contract))
-# print()
-# print(added_items[0]["args"])
+print("Getting image hash...")
+image_hash = added_items[0]["_imageHash"]
+print(image_hash)
+print(get_image_hash(evt_tx_hash, contract))
+print()
+print(added_items[0]["args"])
 # print(added_items[1]["args"])
-# print(added_items)
-# print(changed_items)
+print(added_items)
+print()
+
+print("Results from the filter (statusChanged event)")
+print(changed_items)
+print()
+print(changed_items[0]["args"]["_imageHash"])
