@@ -108,7 +108,8 @@ Enter 2 for export genesis configuration, followed by enter when asked whether y
 
 ![Export_Genesis_1](https://user-images.githubusercontent.com/20734215/139521229-d5768f7a-d9ed-4280-b17e-3de192b70e25.PNG)
 
-![export_genesis_2](https://user-images.githubusercontent.com/20734215/139521286-19d2be21-95b7-4ed2-9e37-259b568fe418.PNG)
+![genesis_export](https://user-images.githubusercontent.com/20734215/139522913-89caede7-3c42-4fad-b996-1df5fd97b996.PNG)
+
 
 Before we sum up, open your genesis file and remove all the precompiled addresses under alloc, or put it simply those public addresses that you did not add manually earlier. Then change the gas limit to 0xe4e1c0 (15000000). Your completed genesis file should look like the byteablock.json present in this repository.
 
@@ -122,42 +123,58 @@ To initialize the genesis block for the node, let's go back and use the handy ch
 
 *NOTE: This has to be performed on every single node to be added to the network*
 
-#### Running the nodes
+#### Running the Nodes (New Setup)
 
-1) For new setups
+The chain_setup script can also be used to run the nodes. As it does not know about the details of the nodes initially, follow its steps to add a node definition
 
-    The chain_setup script can also be used to run the nodes. As it does not know about the details of the nodes initially, follow its steps to add a node definition
+![Run_Nodes_1](https://user-images.githubusercontent.com/20734215/139521914-b26556fd-ba63-46a3-8727-bf3788b2d7c6.PNG)
 
-    ![Run_Nodes_1](https://user-images.githubusercontent.com/20734215/139521914-b26556fd-ba63-46a3-8727-bf3788b2d7c6.PNG)
+After the relevant details are given, the script will attempt to start a geth node running in the background.
 
-    After the relevant details are given, the script will attempt to start a geth node running in the background.
-    
-    In order for the nodes to find one another, as mentioned earlier we need to add them manually. To do this we need to get the enode id of every node, which kinds of provides a way for other nodes to connect to them, and add them into a static-node.json file to be placed in the node1/geth folder.
-    
-    This can be done using chain_setup, through selecting option 4 (List your enode id)
-    
-    ![List_Enode_ID](https://user-images.githubusercontent.com/20734215/139522191-47a7a63e-a00d-488c-b2ac-735a3fd83ee2.PNG)
-    
-    A sample static-nodes.json file looks like this:
-    
-    ```
-    [
-      "enode://xxxxx:port1",
-      "enode://yyyyy:port2"
-    ]
-    ```
-    
-    After creating and placing the static-nodes.json file in the node1/geth folder, restart your node using step 2 below, for convenience reasons
-    
-    Then verify that you are connected to the rest of the hosts by running chain_setup again, and entering option 3 (List nodes you are connected to)
-    
-    ![List_Connected_Nodes](https://user-images.githubusercontent.com/20734215/139522293-0c7c3f76-ef20-4899-bd8c-8981c8be9029.PNG)
+#### Running the Nodes (Existing Setup)
 
-2) For existing setups
-
-    If you already have a node definition, and want to run your node, you can follow the steps in the image below
+If you already have a node definition, and want to run your node, you can follow the steps in the image below
     
-    ![Run_Existing_Node](https://user-images.githubusercontent.com/20734215/139522075-2d9b8ff3-0136-4dd3-ba41-44d81035503d.PNG)
+![Run_Existing_Node](https://user-images.githubusercontent.com/20734215/139522075-2d9b8ff3-0136-4dd3-ba41-44d81035503d.PNG)
+
+### Node Networking
+
+#### Helping nodes find one another
+
+In order for the nodes to find one another, as mentioned earlier we need to add them manually. To do this we need to get the enode id of every node, which kinds of provides a way for other nodes to connect to them, and add them into a static-nodes.json file to be placed in the node1/geth folder, an example of which is shown below:
+
+![static-nodes](https://user-images.githubusercontent.com/20734215/139522693-69094af2-718b-4066-bc46-478e53181900.PNG)
+
+    
+chain_setup can assist in getting the enode number, through selecting option 4 (List your enode id)
+    
+![List_Enode_ID](https://user-images.githubusercontent.com/20734215/139522191-47a7a63e-a00d-488c-b2ac-735a3fd83ee2.PNG)
+    
+A sample static-nodes.json file looks like this:
+    
+```
+[
+  "enode://xxxxx@ip1:port1",
+  "enode://yyyyy@ip2:port2"
+]
+```
+    
+After creating and placing the static-nodes.json file in the node1/geth folder, restart your node.
+
+*Note: The above steps must be performed for every single node in the network, so they can find one another*
+
+
+#### Verifying that each node can see the other nodes
+Verify that you are connected to the rest of the nodes by running chain_setup, and entering option 3 (List nodes you are connected to)
+    
+![List_Connected_Nodes](https://user-images.githubusercontent.com/20734215/139522293-0c7c3f76-ef20-4899-bd8c-8981c8be9029.PNG)
+
+If you don't see all the nodes that are supposed to be in your network, check your static-nodes.json file in the previous step, or if that fails run the actual geth command from the chain_setup file directly in the console with verbosity 5, and observe the output for errors.
+
+```
+geth --datadir node1 --syncmode full --port 30320 --nat extip:10.7.0.15 --netrestrict 10.7.0.0/24 --http --http.addr 10.7.0.15 --http.port 8520 --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid 4862 --miner.gasprice 0 --unlock '0x7084A419E19BB40A74485701D5C5c0Bac55bd071' --password node1/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
+```
+
 
 ## Brownie Stuff
 ### Initialize new brownie project
