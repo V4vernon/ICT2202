@@ -121,6 +121,8 @@ To initialize the genesis block for the node, let's go back and use the handy ch
 
 ![init_genesis](https://user-images.githubusercontent.com/20734215/139521593-cc6e0953-0a6f-4f9c-b9d6-88f7769925ad.PNG)
 
+Enter the name of the genesis file <PROJECTNAME>.json that you generated earlier when prompted for it. The nodes will then be initialized with the genesis file.
+
 *NOTE: This has to be performed on every single node to be added to the network*
 
 #### Running the Nodes (New Setup)
