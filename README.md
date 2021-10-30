@@ -176,6 +176,8 @@ geth --datadir node1 --syncmode full --port xxxxx --nat extip:10.7.0.x --netrest
 ```
 
 ### Using the brownie and web3.py APIs
+
+#### Connecting to the ByteABlock Network
 To connect our nodes to the ethereum python APIs, so as to perform actions on the blockchain, we need to perform the below steps:
 
 1) Create a new brownie project
@@ -184,6 +186,14 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
 
     `brownie networks add live byteablock host=http://10.7.0.x:xxxx chainid=xxxx name="ByteABlock Network"`
     
-3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains comments as to how to use the APIs
+3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains commented examples as to how to use the APIs
+
+#### Deploying a contract
+To deploy a contract, first ensure that the contract ByteABlock.sol is in the brownie contracts folder first (ie ByteABlock/brownie/contracts)
+
+Then call `ByteABlock.deploy({'from':accounts[0], 'gas_price': 0})` while connected to the network. 
+More details of connecting to the network can be found in demo.py
+
+Finally note down where the contract is deployed to, so we can get the contract in the future.
 
 
