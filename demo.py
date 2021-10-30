@@ -99,6 +99,7 @@ contract_w3 = web3.eth.contract(address="0x000e7cE22b6f63EA7E75408a61649F798538F
 # evidenceAdded: keeps track of all the evidences added to a case
 # statusChanged: keeps track of all the status changes to a particular evidence (ie. Check-In/Out)
 # Change fromBlock to 'latest' to get new changes since filter is set up
+# Quick Note regarding Filters, the fromBlock and argument_filters is important. For example, if your fromBlock is set to latest, but the latest block does not match your event, you would get an empty result 
 add_item_filter = contract_w3.events.evidenceAdded.createFilter(fromBlock=1, argument_filters={"_caseId":2})
 # add_item_filter = contract_w3.events.evidenceAdded.createFilter(fromBlock=1)
 change_filter = contract_w3.events.statusChanged.createFilter(fromBlock=1, argument_filters={"_caseId": 1, "_evidId": 1})
@@ -110,11 +111,9 @@ change_filter = contract_w3.events.statusChanged.createFilter(fromBlock=1, argum
 added_items = add_item_filter.get_all_entries()
 changed_items = change_filter.get_all_entries()
 
-# print("Results from the filter (addEvidence event)")
-#print(len(added_items))
-# print("Case ID: {}".format(added_items[0]["args"]["_caseId"]))
-
-# COMMENTED OUT AS THERE IS NO EVIDENCE IN THE CHAIN YET
+print("Results from the filter (addEvidence event)")
+print(len(added_items))
+print("Case ID: {}".format(added_items[0]["args"]["_caseId"]))
 print("Getting image hash...")
 image_hash = added_items[0]["_imageHash"]
 print(image_hash)
