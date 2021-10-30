@@ -125,7 +125,9 @@ To initialize the genesis block for the node, let's go back and use the handy ch
 
 #### Running the Nodes (New Setup)
 
-The chain_setup script can also be used to run the nodes. As it does not know about the details of the nodes initially, follow its steps to add a node definition
+The chain_setup script can also be used to run the nodes. As it does not know about the details of the nodes initially, follow its steps to add a node definition.
+
+This node definition will be saved in a file, saved_nodes.txt, so subsequent starting of this added node is simpler.
 
 ![Run_Nodes_1](https://user-images.githubusercontent.com/20734215/139521914-b26556fd-ba63-46a3-8727-bf3788b2d7c6.PNG)
 
@@ -136,6 +138,8 @@ After the relevant details are given, the script will attempt to start a geth no
 If you already have a node definition, and want to run your node, you can follow the steps in the image below
     
 ![Run_Existing_Node](https://user-images.githubusercontent.com/20734215/139522075-2d9b8ff3-0136-4dd3-ba41-44d81035503d.PNG)
+
+This would similarly start a geth node running in the background
 
 ### Node Networking
 
