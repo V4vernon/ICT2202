@@ -175,18 +175,13 @@ If you don't see all the nodes that are supposed to be in your network, check yo
 geth --datadir node1 --syncmode full --port 30320 --nat extip:10.7.0.15 --netrestrict 10.7.0.0/24 --http --http.addr 10.7.0.15 --http.port 8520 --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid 4862 --miner.gasprice 0 --unlock '0x7084A419E19BB40A74485701D5C5c0Bac55bd071' --password node1/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
 ```
 
+### Using the brownie and web3.py APIs
+To connect our nodes to the ethereum python APIs, so as to perform actions on the blockchain, we need to perform the below steps:
 
-## Brownie Stuff
-### Initialize new brownie project
-`brownie init`
-### Add a network
-`brownie networks add live VPN host=http://10.7.0.6:8501 chainid=10117 name="VPN Network"`
-
-## Geth Debug
-```
-geth attach geth.ipc -exec admin.nodeInfo.enode
-geth attach geth.ipc -exec admin.peers
-geth attach geth.ipc -exec admin.addPeer("0x...")
-```
+1) Create a new brownie project
+    `mkdir brownie && cd brownie && brownie init`
+2) Then tell brownie about the network we created earlier
+    `brownie networks add live byteablock host=http://10.7.0.15:8520 chainid=4862 name="ByteABlock Network"
+3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains comments as to how to use the APIs
 
 
