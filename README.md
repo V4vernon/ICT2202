@@ -181,7 +181,9 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
 1) Create a new brownie project
     `mkdir brownie && cd brownie && brownie init`
 2) Then tell brownie about the network we created earlier
+
     `brownie networks add live byteablock host=http://10.7.0.15:8520 chainid=4862 name="ByteABlock Network"`
+    
 3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains comments as to how to use the APIs
 
 
