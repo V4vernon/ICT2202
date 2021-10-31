@@ -1,5 +1,5 @@
 {% extends "dashboard_base.html" %}
-{% block title %} Profile {% endblock %}
+{% block title %} Case {% endblock %}
 {% block content %}
 
 <!-- Divider -->
@@ -101,13 +101,15 @@
                     </tr>
                     </thead>
                     <tfoot>
+                    {% for case in case %}
                     <tr>
                         <th>{{ case['case_name'] }}</th>
                         <th>{{ case['case_date'] }}</th>
-                        <th>{{ case['assigned'] }}</th>
+                        <th>{{ username }}</th>
                         <th>{{ case['location'] }}</th>
                         <th>{{ case['status'] }}</th>
                     </tr>
+                    {% endfor %}
                     </tfoot>
                 </table>
             </div>

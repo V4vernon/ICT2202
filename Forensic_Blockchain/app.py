@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, m
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import MySQLdb.cursors, re, uuid, hashlib, datetime, os
+import pytz
+
 
 app = Flask(__name__)
 
@@ -321,8 +323,10 @@ def Case():
     if 'loggedin' in session:
         # User is loggedin show them the home page
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM bitcase')
-        case = cursor.fetchone()
+        cursor.execute('SELECT id FROM accounts  WHERE username = %s', (session['username'],))
+        id = cursor.fetchone()
+        cursor.execute('SELECT * FROM bitcase  WHERE account_id = %s', (id['id'],))
+        case = cursor.fetchall()
         return render_template('case.html', username=session['username'], role=session['role'], case=case)
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
@@ -333,22 +337,32 @@ def Case():
 def Case_Add():
     # Output message if something goes wrong...
     msg = ''
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT username FROM accounts')
+    name = cursor.fetchall()
     # Check if "username", "password" and "email" POST requests exist (user submitted form)
     if request.method == 'POST' and 'casename' in request.form and 'Assigned_To' in request.form \
             and 'Location' in request.form:
         # Create variables for easy access
         casename = request.form['casename']
         assigned = request.form['Assigned_To']
+        cursor2 = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor2.execute('SELECT id FROM accounts WHERE username = %s', (assigned,))
+        account_id = cursor2.fetchone()
         mydate = request.form['Date']
+        epoch_date = datetime.datetime.strptime(mydate, '%Y-%m-%d %H:%M')
+        epoch_date = pytz.utc.localize(epoch_date).timestamp()
         location = request.form['Location']
         status = request.form['Status']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('INSERT INTO bitcase VALUES (NULL, %s, %s, %s, %s, %s)', (casename, mydate, assigned, location, status))
+        cursor.execute('INSERT INTO bitcase VALUES (NULL, %s, %s, %s, %s, %s)',
+                       (casename, epoch_date,location, status, account_id['id']))
         mysql.connection.commit()
         msg = 'You have successfully created a case!'
-    return render_template('case-add.html', msg=msg, username=session['username'], role=session['role'])
+    return render_template('case-add.html', msg=msg, username=session['username'], role=session['role'], name=name)
 
 
+# Error handling Page
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html', title='404'), 404
@@ -434,6 +448,30 @@ def admin_account(id):
         return redirect(url_for('admin'))
     return render_template('admin/account.html', username=session['username'], role=session['role'], account=account,
                            page=page, roles=roles)
+
+
+# API Call
+@app.route('/api/android', methods=['GET'])
+def api_call():
+    username = request.args.get("username")
+    password = request.args.get("password")
+    hash = password + app.secret_key
+    hash = hashlib.sha1(hash.encode())
+    password = hash.hexdigest()
+    # Check if account exists using MySQL
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
+    account = cursor.fetchone()
+    if account:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM bitcase  WHERE assigned = %s', (str(account['username']),))
+        case = cursor.fetchone()
+        if case:
+            return case
+        else:
+            return "No Case"
+    else:
+        return "No User Account"
 
 
 if __name__ == '__main__':
