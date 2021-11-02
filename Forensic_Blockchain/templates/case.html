@@ -33,7 +33,6 @@
 </li>
 
 
-
 <!-- Divider -->
 <hr class="sidebar-divider">
 
@@ -48,7 +47,7 @@
          data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Case Details:</h6>
-           <a class="collapse-item active" href="{{ url_for('Case') }}">Show Case</a>
+            <a class="collapse-item active" href="{{ url_for('Case') }}">Show Case</a>
             <a class="collapse-item" href="{{ url_for('Case_Add') }}">Add Case</a>
         </div>
     </div>
@@ -90,28 +89,34 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>Case Name</th>
-                        <th>Case Date</th>
-                        <th>Assigned To</th>
-                        <th>Location</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    {% for case in case %}
-                    <tr>
-                        <th>{{ case['case_name'] }}</th>
-                        <th>{{ case['case_date'] }}</th>
-                        <th>{{ username }}</th>
-                        <th>{{ case['location'] }}</th>
-                        <th>{{ case['status'] }}</th>
-                    </tr>
-                    {% endfor %}
-                    </tfoot>
-                </table>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Case Name</th>
+                            <th>Case Date</th>
+                            <th>Assigned To</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Evidence</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <form action="{{ url_for('Show_Case') }}" method="post">
+                        {% for case in case %}
+                        <tr>
+                            <th>{{ case['id'] }}</th>
+                            <th>{{ case['case_name'] }}</th>
+                            <th>{{ case['case_date'] }}</th>
+                            <th>{{ username }}</th>
+                            <th>{{ case['location'] }}</th>
+                            <th>{{ case['status'] }}</th>
+                            <th><button type="submit"  name="id" value="{{ case['id'] }}" class="form-control btn btn-primary rounded submit px-3">View </button></th>
+                        </tr>
+                        {% endfor %}
+                        </tfoot>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
