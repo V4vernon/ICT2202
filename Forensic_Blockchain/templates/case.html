@@ -53,23 +53,25 @@
     </div>
 </li>
 
+{% if role == 'Admin' %}
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-{% if role == 'Admin' %}
 <!-- Nav Item - Admin -->
 <li class="nav-item">
     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree"
        aria-expanded="true"
        aria-controls="collapseThree">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <span>Accounts</span></a>
+        <span>Admin</span></a>
     <div id="collapseThree" class="collapse" aria-labelledby="headingTwo"
          data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Profile:</h6>
             <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
             <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
+	    <a class="collapse-item " href="{{ url_for('admin_case') }}">Show Case</a>
+	    <a class="collapse-item" href="{{ url_for('admin_evidence') }}">Show Latest Transactions</a>
         </div>
     </div>
 </li>
@@ -103,17 +105,17 @@
                         </thead>
                         <tfoot>
                         <form action="{{ url_for('Show_Case') }}" method="post">
-                        {% for case in case %}
+                        {% for case,date_list in data %}
                         <tr>
                             <th>{{ case['id'] }}</th>
                             <th>{{ case['case_name'] }}</th>
-                            <th>{{ case['case_date'] }}</th>
+                            <th>{{ date_list }}</th>
                             <th>{{ username }}</th>
                             <th>{{ case['location'] }}</th>
                             <th>{{ case['status'] }}</th>
                             <th><button type="submit"  name="id" value="{{ case['id'] }}" class="form-control btn btn-primary rounded submit px-3">View </button></th>
                         </tr>
-                        {% endfor %}
+			{% endfor %}
                         </tfoot>
                     </table>
                 </form>

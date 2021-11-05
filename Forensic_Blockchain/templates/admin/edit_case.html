@@ -1,6 +1,7 @@
-{% extends "admin/base.html" %}
-{% block title %} Accounts {% endblock %}
+{% extends "dashboard_base.html" %}
+{% block title %} Edit_Case {% endblock %}
 {% block content %}
+
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
@@ -35,7 +36,6 @@
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-
 <!-- Nav Item - Case -->
 <li class="nav-item">
     <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapsefour"
@@ -47,19 +47,18 @@
          data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Case Details:</h6>
-           <a class="collapse-item" href="{{ url_for('Case') }}">Show Case</a>
+            <a class="collapse-item active" href="{{ url_for('Case') }}">Show Case</a>
             <a class="collapse-item" href="{{ url_for('Case_Add') }}">Add Case</a>
         </div>
     </div>
 </li>
 
-
+{% if role == 'Admin' %}
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-{% if role == 'Admin' %}
 <!-- Nav Item - Admin -->
-<li class="nav-item active">
+<li class="nav-item">
     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree"
        aria-expanded="true"
        aria-controls="collapseThree">
@@ -70,66 +69,57 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Profile:</h6>
             <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
-            <a class="collapse-item active " href="{{ url_for('admin_account') }}">Add Accounts</a>
+            <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
 	    <a class="collapse-item " href="{{ url_for('admin_case') }}">Show Case</a>
 	    <a class="collapse-item" href="{{ url_for('admin_evidence') }}">Show Latest Transactions</a>
         </div>
     </div>
 </li>
 {% endif %}
+
 {% endblock %}
 
 {% block user %}{{ username }}{% endblock %}
 {% block content1 %}
-
+<!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"> Add Account</h1>
+    <h1 class="h3 mb-4 text-gray-800">Edit Case</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Account Details</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Case Details</h6>
         </div>
         <div class="card-body">
-            <form action="" method="post">
+            <form action="{{ url_for('admin_edit_case') }}" method="post">
+		<div class="form-group">
+                    <label for="id">Case ID</label>
+                    <input type="text" class="form-control" value="{{ case['id'] }}" name="id" id="id"
+                           placeholder="id">
+                </div>
+
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" value="{{ account['username'] }}" name="username"
-                           id="username"
-                           placeholder="Username">
+                    <label for="name">Case Name</label>
+                    <input type="text" class="form-control" value="{{ case['case_name'] }}" name="name" id="name"
+                           placeholder="name">
                 </div>
                 <div class="form-group">
-                    <label for="password">New Password</label>
-                    <input type="text" class="form-control" value="{{ account['password'] }}" name="password"
-                           id="password" placeholder="New Password">
+                    <label for="date">Case Date</label>
+                    <input type="text" class="form-control" value="{{ case['case_date'] }}" name="date" id="date"
+                           placeholder="date">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" value="{{ account['email'] }}" name="email" id="email"
-                           placeholder="Email">
+                    <label for="location">Location</label>
+                    <input type="location" class="form-control" value="{{ case['location'] }}" name="location" id="location" >
                 </div>
-                <div class="form-group">
-                    <label for="activation_code">Activation Code</label>
-                    <input type="text" class="form-control" id="activation_code" name="activation_code"
-                           placeholder="Activation Code" value="{{ account['activation_code'] }}">
+				<div class="form-group">
+                    <label for="status">Status</label>
+                    <input type="status" class="form-control" value="{{ case['status'] }}" name="status" id="status" >
                 </div>
-                <div class="form-group">
-                    <label for="rememberme">Remember Me Code</label>
-                    <input type="text" id="rememberme" class="form-control" name="rememberme"
-                           placeholder="Remember Me Code"
-                           value="{{ account['rememberme'] }}">
-                </div>
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select class="form-control" id="role" name="role" style="margin-bottom: 30px;">
-                        {% for role in roles %}
-                        <option value="{{ role }}" {{
-                        ' selected' if account['role'] == role else '' }}>{{ role }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
+                <button type="submit" value="Save" class="btn btn-primary">Submit</button>
             </form>
         </div>
+        <p>{{ msg }}</p>
     </div>
 </div>
+<!-- /.container-fluid -->
 {% endblock %}

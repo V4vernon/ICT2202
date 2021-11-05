@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session, make_response, jsonify
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
-import MySQLdb.cursors, re, uuid, hashlib, datetime, os
+import MySQLdb.cursors, re, uuid, hashlib, datetime, os, os.path
 from brownie import *
 p = project.load("brownie", name="BrownieProject")
 p.load_config()
 from brownie.project.BrownieProject import *
 from brownie.network import priority_fee, max_fee, web3
 from brownie.convert import to_string
-import json,asyncio,time,pytz,cv2,base64,os,hashlib
+from datetime import datetime as dt
+import json,pytz,cv2,base64,os,hashlib
 import numpy as np
 
 
@@ -43,7 +44,7 @@ mail = Mail(app)
 
 # Enable account activation & CSRF protection
 account_activation_required = True
-csrf_protection = False
+csrf_protection = True
 
 
 # Connect to the blockchain network
@@ -212,33 +213,77 @@ def home():
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT id FROM accounts WHERE username = %s', (session['username'],))
+        # This is the handler_id
         account_id = cursor.fetchone()
         cursor.execute('SELECT COUNT(case_name) FROM bitcase WHERE account_id = %s', (account_id['id'],))
         account = cursor.fetchone()
-        cursor.execute('SELECT id FROM bitcase')
-        case_id = cursor.fetchall()
-        
-        evidence_dict = {}
-        evidence_list = []
-        for caseid in case_id:
-            change_filter = contract_w3.events.statusChanged.createFilter(fromBlock=1, argument_filters={"_caseId": caseid['id']})
-            changed_items = change_filter.get_all_entries()
-            if changed_items:
-                for num in range(len(changed_items)):
-                    evidence_dict['status'] = (contract.centralStore(changed_items[num]["args"]["_caseId"],changed_items[num]["args"]["_evidId"])[6])
-                    evidence_dict['time'] = changed_items[num]["args"]["date"]
-                    evidence_dict['evid_id'] = changed_items[num]["args"]["_evidId"]
-                    evidence_dict['case_id'] = changed_items[num]["args"]["_caseId"]
-                    handler_id = changed_items[num]["args"]["_handlerId"]
-                    cursor.execute('SELECT username FROM accounts WHERE id = %s', (handler_id,))
-                    account_id = cursor.fetchone()
-                    evidence_dict['handler'] = account_id['username']
-                    evidence_list.append(evidence_dict.copy())
-                    evidence_dict.clear()
         # User is loggedin show them the home page
-        return render_template('home.html', username=session['username'], role=session['role'], no_of_case = account['COUNT(case_name)'], evidence_list=evidence_list)
+        return render_template('home.html', username=session['username'], role=session['role'], no_of_case = account['COUNT(case_name)'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
+
+
+# Dashboard Call BC
+@app.route('/home/latest')
+def latest_blocks():
+    # Check if user is logged in
+    if "loggedin" in session:
+        all_entries = []
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT id FROM accounts WHERE username = %s', (session['username'],))
+        # This is the handler_id
+        account_id = cursor.fetchone()
+        #Gets the latest 5 blocks
+        latest = web3.eth.block_number
+        # Convert handler_id into topics representation. Replace the number three here with the actual handler id
+        handler_bytes = (account_id['id']).to_bytes(32, byteorder='big')
+        handler_byte_str = "0x" +handler_bytes.hex()
+        block_filter = web3.eth.filter({"fromBlock": latest-4, "topics": [None, None, None, handler_byte_str]})
+        latest_blocks = block_filter.get_all_entries()
+        for block in latest_blocks:
+            # Gets the transaction hash
+            blk_tx_hash = block["transactionHash"].hex()
+            # Gets the transacted block
+            blk_tx = chain.get_transaction(blk_tx_hash)
+            # Gets the action/function call of the transaction
+            action = blk_tx.events.keys()[0]
+            # Gets timestamp
+            epoch_time = blk_tx.timestamp
+            date = dt.fromtimestamp(epoch_time).strftime("%d-%m-%Y %H:%M:%S")
+            # Gets decoded block
+            block = contract.decode_input(blk_tx.input)[1]
+            if action == "evidenceAdded":
+                handler_id = block[2]
+                cursor.execute('SELECT username FROM accounts WHERE id = %s', (handler_id,))
+                account_id = cursor.fetchone()
+                # Appends the data into list to be returned within another list
+                entries = []
+                entries.append(date)
+                entries.append(block[0])
+                entries.append(block[1])
+                entries.append(block[8])
+                entries.append(action)
+                entries.append(block[9])
+                all_entries.append(entries)
+            elif action == "statusChanged":
+                # Appends the data into list to be returned within another list
+                handler_id = block[2]
+                cursor.execute('SELECT username FROM accounts WHERE id = %s', (handler_id,))
+                account_id = cursor.fetchone()
+                entries = []
+                entries.append(date)
+                entries.append(block[0])
+                entries.append(block[1])
+                entries.append(block[3])
+                entries.append(action)
+                entries.append(block[5])
+                all_entries.append(entries)
+        if len(latest_blocks) != 0:
+            #jsonifys the data to be sent over via the ajax call
+            encoded_result = json.dumps(all_entries)
+            return encoded_result
+    else:
+        return redirect(url_for('login'))
 
 
 # Profile Page
@@ -380,7 +425,14 @@ def Case():
         id = cursor.fetchone()
         cursor.execute('SELECT * FROM bitcase  WHERE account_id = %s', (id['id'],))
         case = cursor.fetchall()
-        return render_template('case.html', username=session['username'], role=session['role'], case=case)
+        date_list = []
+        if case:
+            for num in range(len(case)):
+                date = case[num]['case_date']
+                date = dt.fromtimestamp(int(date))
+                date_list.append(date)
+ 
+        return render_template('case.html', username=session['username'], role=session['role'], data = zip(case,date_list))
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
     
@@ -409,7 +461,7 @@ def Show_Case():
                     evidence_dict['handler'] = session['username']
                     evidence_dict['curr_status'] = added_items[num]["args"]["_currStatus"]
                     evidence_dict['serial_no'] = added_items[num]["args"]["_serialNo"]
-                    evidence_dict['time'] = added_items[num]["args"]["date"]
+                    evidence_dict['time'] = dt.fromtimestamp(added_items[num]["args"]["date"]).strftime("%d-%m-%Y %H:%M:%S")
                     transHash = added_items[len(added_items)-1]["transactionHash"].hex()
                     tx = chain.get_transaction(transHash)
                     evidence_dict['purpose'] = contract.decode_input(tx.input)[1][9]
@@ -454,7 +506,7 @@ def evidence_history():
                 username = cursor.fetchone()
                 transHash = first_added_evidence[len(first_added_evidence)-1]["transactionHash"].hex()
                 tx = chain.get_transaction(transHash)
-                evidence_dict['time'] = first_added_evidence[0]["args"]["date"]
+                evidence_dict['time'] = dt.fromtimestamp(first_added_evidence[0]["args"]["date"]).strftime("%d-%m-%Y %H:%M:%S")
                 evidence_dict['handler'] = username['username']
                 evidence_dict['status'] = first_added_evidence[0]["args"]["_currStatus"]
                 evidence_dict['purpose'] = contract.decode_input(tx.input)[1][9]
@@ -466,7 +518,7 @@ def evidence_history():
                     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                     cursor.execute('SELECT username FROM accounts WHERE id = %s', (modified_evidence[num]["args"]["_handlerId"],))
                     username = cursor.fetchone()
-                    evidence_dict['time'] = modified_evidence[num]["args"]["date"]
+                    evidence_dict['time'] = dt.fromtimestamp(modified_evidence[num]["args"]["date"]).strftime("%d-%m-%Y %H:%M:%S")
                     evidence_dict['handler'] = username['username']
                     evidence_dict['status'] = modified_evidence[num]["args"]["_currStatus"]
                     evidence_dict['purpose'] = modified_evidence[num]["args"]["_purpose"]
@@ -499,7 +551,7 @@ def Case_Add():
         cursor2.execute('SELECT id FROM accounts WHERE username = %s', (assigned,))
         account_id = cursor2.fetchone()
         mydate = request.form['Date']
-        epoch_date = datetime.datetime.strptime(mydate, '%Y-%m-%d %H:%M')
+        epoch_date = dt.strptime(mydate, '%Y-%m-%d %H:%M')
         epoch_date = pytz.utc.localize(epoch_date).timestamp()
         location = request.form['Location']
         status = request.form['Status']
@@ -526,7 +578,7 @@ def admin_loggedin():
     return False
 
 
-# Admin Page
+# Admin Page (index)
 @app.route('/admin/', methods=['GET', 'POST'])
 def admin():
     # Check if admin is logged-in
@@ -538,6 +590,123 @@ def admin():
     cursor.execute('SELECT * FROM accounts')
     accounts = cursor.fetchall()
     return render_template('admin/index.html', username=session['username'], role=session['role'], accounts=accounts)
+
+
+# Admin Page (case)
+@app.route('/admin/case', methods=['GET', 'POST'])
+def admin_case():
+    # Check if admin is logged-in
+    if not admin_loggedin():
+        return redirect(url_for('login'))
+    msg = ''
+    # Retrieve all accounts from the database
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM bitcase')
+    case = cursor.fetchall()
+    date_list = []
+    if case:
+        for num in range(len(case)):
+            date = case[num]['case_date']
+            date = dt.fromtimestamp(int(date))
+            date_list.append(date)
+
+    return render_template('admin/case.html', username=session['username'], role=session['role'], data= zip(case,date_list))
+
+
+# Admin Page (Edit_case)
+@app.route('/admin/edit_case', methods=['GET', 'POST'])
+def admin_edit_case():
+    # Check if admin is logged-in
+    if not admin_loggedin():
+        return redirect(url_for('login')) 
+    msg = ''
+    case_id = request.form.get('id')
+    session['caseid'] = case_id
+    if request.method == 'POST' and 'name' in request.form and 'date' in request.form and 'location' in request.form and 'status' in request.form and 'id' in request.form:
+        case_id = request.form['id']
+        case_name = request.form['name']
+        case_date = request.form['date']
+        case_location = request.form['location']
+        case_status = request.form['status']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('UPDATE bitcase SET case_name = %s, case_date = %s, location = %s, status = %s WHERE id = %s',
+                               (case_name, case_date, case_location,case_status, case_id,))
+        mysql.connection.commit()
+        msg = "Updated!"
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM bitcase WHERE id = %s', (case_id,))
+    case_details = cursor.fetchone()
+    return render_template('admin/edit_case.html', username=session['username'], case = case_details ,role=session['role'], msg=msg)
+
+
+
+# Admin Page (index)
+@app.route('/admin/evidence')
+def admin_evidence():
+    # Check if admin is logged-in
+    if not admin_loggedin():
+        return redirect(url_for('login'))
+    msg = ''
+
+    return render_template('admin/evidence.html', username=session['username'], role=session['role'])
+
+@app.route('/admin/evidence/all')
+def admin_evidence_call():
+    # Check if admin is logged-in
+    if not admin_loggedin():
+        return redirect(url_for('login'))
+    msg = ''
+
+    all_entries = []
+    block_filter = web3.eth.filter({"fromBlock" : 1})
+    all_blocks = block_filter.get_all_entries()
+    for block in all_blocks:
+        # Gets the transaction hash
+        blk_tx_hash = block["transactionHash"].hex()
+        # Gets the transacted block
+        blk_tx = chain.get_transaction(blk_tx_hash)
+        # Gets the action/function call of the transaction
+        action = blk_tx.events.keys()[0]
+        # Gets timestamp
+        epoch_time = blk_tx.timestamp
+        date = dt.fromtimestamp(epoch_time).strftime("%d-%m-%Y %H:%M:%S")
+        # Gets decoded block
+        block = contract.decode_input(blk_tx.input)[1]
+        if action == "evidenceAdded":
+            handler_id = block[2]
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT username FROM accounts WHERE id = %s', (handler_id,))
+            handler_name = cursor.fetchone()
+            # Appends the data into list to be returned within another list
+            entries = []
+            entries.append(date)
+            entries.append(block[0])
+            entries.append(block[1])
+            entries.append(handler_name['username'])
+            entries.append(block[8])
+            entries.append(action)
+            entries.append(block[9])
+            all_entries.append(entries)
+
+        elif action == "statusChanged":
+            # Appends the data into list to be returned within another list
+            handler_id = block[2]
+            cursor.execute('SELECT username FROM accounts WHERE id = %s', (handler_id,))
+            handler_name = cursor.fetchone()
+            entries = []
+            entries.append(date)
+            entries.append(block[0])
+            entries.append(block[1])
+            entries.append(handler_name['username'])
+            entries.append(block[3])
+            entries.append(action)
+            entries.append(block[5])
+            all_entries.append(entries)
+
+    if len(all_blocks) != 0:
+            #jsonifys the data to be sent over via the ajax call
+            encoded_result = json.dumps(all_entries)
+            return encoded_result
 
 
 @app.route('/admin/account/<int:id>', methods=['GET', 'POST'])
@@ -639,7 +808,7 @@ def basic_case_info_api_call():
                     #storing the evidence data in a dictionary (evidence_dict)
                     evidence_dict['evid_id'] = added_items[num]["args"]["_evidId"]
                     evidence_dict['handler'] = username
-                    evidence_dict['curr_status'] = added_items[num]["args"]["_currStatus"]
+                    evidence_dict['curr_status'] = (contract.centralStore(int(caseid['id']),num+1)[6])
                     evidence_dict['serial_no'] = added_items[num]["args"]["_serialNo"]
                     evidence_list.append(evidence_dict.copy())
                     evidence_dict.clear()
@@ -725,12 +894,12 @@ def add_evidence_api_call():
                 #storing the evidence data in a dictionary (evidence_dict)
                 evidence_dict['evid_id'] = added_items[num]["args"]["_evidId"]
                 evidence_dict['handler'] = handler
-                evidence_dict['curr_status'] = added_items[num]["args"]["_currStatus"]
+                evidence_dict['curr_status'] = (contract.centralStore(case_id,num+1)[6])
                 evidence_dict['serial_no'] = added_items[num]["args"]["_serialNo"]
                 evidence_list.append(evidence_dict.copy())
                 evidence_dict.clear()
         else:
-            cursor.execute('SELECT * FROM bitcase  WHERE id = %s', (caseid['id'],))
+            cursor.execute('SELECT * FROM bitcase  WHERE id = %s', (case_id['id'],))
             case_data = cursor.fetchone()
             # storing the case data in a dictionary (case_dict)
             if case_data:
@@ -783,8 +952,10 @@ def view_evidence_api_call():
         modified_evidence = change_filter.get_all_entries()
     
         dirname = "Case/" + "case_id "+ str(CaseId) + "/" + "Evidence_id " + str(EvidenceId)
+        os.makedirs(dirname,exist_ok=True)
+        directory_length = (len([name for name in os.listdir(dirname) if os.path.isfile(os.path.join(dirname,name))])) 
         # Caculate Image Hash
-        with open(dirname +"/1.jpg","rb") as f:
+        with open(dirname +"/"+ str(directory_length) + ".jpg","rb") as f:
             bytes = f.read() # read entire file as bytes
             image_hash = hashlib.sha256(bytes).hexdigest();
             encoded_string = base64.b64encode(bytes)
@@ -804,7 +975,7 @@ def view_evidence_api_call():
             username = cursor.fetchone()
             transHash = first_added_evidence[len(first_added_evidence)-1]["transactionHash"].hex()
             tx = chain.get_transaction(transHash)
-            evidence_dict['time'] = first_added_evidence[0]["args"]["date"]
+            evidence_dict['date'] = first_added_evidence[0]["args"]["date"]
             evidence_dict['handler'] = username['username']
             evidence_dict['status'] = first_added_evidence[0]["args"]["_currStatus"]
             evidence_dict['purpose'] = contract.decode_input(tx.input)[1][9]
@@ -816,7 +987,7 @@ def view_evidence_api_call():
                     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                     cursor.execute('SELECT username FROM accounts WHERE id = %s', (modified_evidence[num]["args"]["_handlerId"],))
                     username = cursor.fetchone()
-                    evidence_dict['time'] = modified_evidence[num]["args"]["date"]
+                    evidence_dict['date'] = modified_evidence[num]["args"]["date"]
                     evidence_dict['handler'] = username['username']
                     evidence_dict['status'] = modified_evidence[num]["args"]["_currStatus"]
                     evidence_dict['purpose'] = modified_evidence[num]["args"]["_purpose"]
@@ -842,7 +1013,6 @@ def check_evidence_api_call():
     purpose = content['purpose']
     b64_image = content['image']
 
-
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT id FROM accounts WHERE username = %s', (handler,))
     account_id = cursor.fetchone()
@@ -853,17 +1023,48 @@ def check_evidence_api_call():
         img = cv2.imdecode(jpg_as_np, flags=1)
         dirname = "Case/" + "case_id "+ str(case_id) + "/" + "Evidence_id " + str(evid_id)
         os.makedirs(dirname,exist_ok=True)
-        cv2.imwrite(os.path.join(dirname,"1.jpg"), img)
+        directory_length = (len([name for name in os.listdir(dirname) if os.path.isfile(os.path.join(dirname,name))])) + 1
+        cv2.imwrite(os.path.join(dirname,str(directory_length) +".jpg"), img)
         # Caculate Image Hash
-        with open(dirname +"/1.jpg","rb") as f:
+        with open(dirname +"/"+ str(directory_length) + ".jpg","rb") as f:
             bytes = f.read() # read entire file as bytes
             image_hash = hashlib.sha256(bytes).hexdigest();
         # Sending Case & Evidence data to the blockchain
         contract.modifyEvidenceStatus(case_id,evid_id,handler_id,new_status,image_hash,purpose,{'from': accounts[0], 'gas_price':0})
-        return "Success"
+
+        add_item_filter = contract_w3.events.evidenceAdded.createFilter(fromBlock=1, argument_filters={"_caseId":case_id})
+        added_items = add_item_filter.get_all_entries()
+        final_case_list,evidence_list=[],[]
+        case_dict,evidence_dict,final_case_dict = {},{},{}
+
+        if added_items:
+            for num in range(len(added_items)):
+                case_id = added_items[num]["args"]["_caseId"]
+                cursor.execute('SELECT * FROM bitcase  WHERE id = %s', (case_id,))
+                case_data = cursor.fetchone()
+                # storing the case data in a dictionary (case_dict)
+                if case_data:
+                    case_dict['case_id'] = case_data['id']
+                    case_dict['case_name'] = case_data['case_name']
+                    case_dict['date'] = case_data['case_date']
+                    case_dict['location'] = case_data['location']
+                    case_dict['case_status'] = case_data['status']
+                #storing the evidence data in a dictionary (evidence_dict)
+                evidence_dict['evid_id'] = added_items[num]["args"]["_evidId"]
+                evidence_dict['handler'] = handler
+                evidence_dict['curr_status'] = (contract.centralStore(case_id,num+1)[6])
+                evidence_dict['serial_no'] = added_items[num]["args"]["_serialNo"]
+                evidence_list.append(evidence_dict.copy())
+                evidence_dict.clear()
+
+        case_dict['evidence'] = evidence_list.copy()
+        final_case_list.append(case_dict.copy())
+        evidence_list.clear()
+        final_case_dict['cases'] = final_case_list
+        return jsonify(final_case_dict)
     else:
         return "No User Account"
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0')

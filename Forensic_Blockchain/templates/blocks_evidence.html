@@ -53,10 +53,10 @@
     </div>
 </li>
 
+{% if role == 'Admin' %}
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-{% if role == 'Admin' %}
 <!-- Nav Item - Admin -->
 <li class="nav-item">
     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree"
@@ -70,6 +70,8 @@
             <h6 class="collapse-header">Custom Profile:</h6>
             <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
             <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
+	    <a class="collapse-item " href="{{ url_for('admin_case') }}">Show Case</a>
+	    <a class="collapse-item" href="{{ url_for('admin_evidence') }}">Show Latest Transactions</a>
         </div>
     </div>
 </li>

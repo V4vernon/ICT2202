@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-{% block title %} Accounts {% endblock %}
+{% block title %} Case {% endblock %}
 {% block content %}
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
@@ -69,9 +69,9 @@
          data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Profile:</h6>
-            <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
-            <a class="collapse-item active " href="{{ url_for('admin_account') }}">Add Accounts</a>
-	    <a class="collapse-item " href="{{ url_for('admin_case') }}">Show Case</a>
+            <a class="collapse-item" href="{{ url_for('admin') }}">Show Accounts</a>
+            <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
+	    <a class="collapse-item active" href="{{ url_for('admin_case') }}">Show Case</a>
 	    <a class="collapse-item" href="{{ url_for('admin_evidence') }}">Show Latest Transactions</a>
         </div>
     </div>
@@ -81,55 +81,53 @@
 
 {% block user %}{{ username }}{% endblock %}
 {% block content1 %}
-
+<!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"> Add Account</h1>
+    <h1 class="h3 mb-4 text-gray-800">Case</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Account Details</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Case Details</h6>
         </div>
         <div class="card-body">
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" value="{{ account['username'] }}" name="username"
-                           id="username"
-                           placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <label for="password">New Password</label>
-                    <input type="text" class="form-control" value="{{ account['password'] }}" name="password"
-                           id="password" placeholder="New Password">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" value="{{ account['email'] }}" name="email" id="email"
-                           placeholder="Email">
-                </div>
-                <div class="form-group">
-                    <label for="activation_code">Activation Code</label>
-                    <input type="text" class="form-control" id="activation_code" name="activation_code"
-                           placeholder="Activation Code" value="{{ account['activation_code'] }}">
-                </div>
-                <div class="form-group">
-                    <label for="rememberme">Remember Me Code</label>
-                    <input type="text" id="rememberme" class="form-control" name="rememberme"
-                           placeholder="Remember Me Code"
-                           value="{{ account['rememberme'] }}">
-                </div>
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select class="form-control" id="role" name="role" style="margin-bottom: 30px;">
-                        {% for role in roles %}
-                        <option value="{{ role }}" {{
-                        ' selected' if account['role'] == role else '' }}>{{ role }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
-            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <td>Case ID</td>
+                        <td>Case Name</td>
+                        <td class="responsive-hidden">Case Date</td>
+                        <td class="responsive-hidden">Location</td>
+                        <td class="responsive-hidden">Status</td>
+                        <td class="responsive-hidden">Account ID</td>
+			<td class="responsive-hidden">Evidence</td>	
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if not data %}
+                    <tr>
+                        <td colspan="8" style="text-align:center;">There are no case</td>
+                    </tr>
+                    {% else %}
+                    {% for case,date_list in data %}
+		    <form action="{{ url_for('admin_edit_case') }}" method="post">
+                    <tr class="details">
+                        <td>{{ case['id'] }}</td>
+                        <td>{{ case['case_name'] }}</td>
+                        <td class="responsive-hidden" style="word-break:break-all;">{{ date_list }}</td>
+                        <td class="responsive-hidden">{{ case['location'] }}</td>
+                        <td class="responsive-hidden">{{ case['status'] }}</td>
+                        <td class="responsive-hidden">{{ case['account_id'] }}</td>
+			<td class="responsive-hidden"><button type="submit"  name="id" value="{{ case['id'] }}" class="form-control btn btn-primary rounded submit px-3">Edit </button></td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+	       </form>
+            </div>
         </div>
     </div>
 </div>
+<!-- /.container-fluid -->
 {% endblock %}

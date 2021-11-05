@@ -33,5 +33,5 @@ ON UPDATE CASCADE;
 
 
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `role`, `activation_code`, `rememberme`, `reset`) VALUES
-(1, 'admin', 'b9fc65789ca65526a77b0009f24e9c01a43e32b3', 'admin@forensic.io', 'Admin', 'activated', '', ''),
-(2, 'member', 'f046926a90af0b97acbc451bcbde266878f5f963', 'member@forensic.io', 'Member', 'activated', '', '');
+(1, 'admin', 'b9fc65789ca65526a77b0009f24e9c01a43e32b3', 'admin@forensic.com', 'Admin', 'activated', '', ''),
+(2, 'member', 'f046926a90af0b97acbc451bcbde266878f5f963', 'member@forensic.com', 'Member', 'activated', '', '');

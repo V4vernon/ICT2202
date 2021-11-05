@@ -1,6 +1,15 @@
 {% extends "dashboard_base.html" %}
 {% block title %} Dashboard {% endblock %}
 {% block content %}
+<style>
+    .break-column {
+        flex-basis: 100%;
+        width: 0;
+    }
+    .mystyle{
+        text-align: center;
+    }
+</style>
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
@@ -54,23 +63,25 @@
 </li>
 
 
+{% if role == 'Admin' %}
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-{% if role == 'Admin' %}
 <!-- Nav Item - Admin -->
 <li class="nav-item">
     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree"
        aria-expanded="true"
        aria-controls="collapseThree">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <span>Accounts</span></a>
+        <span>Admin</span></a>
     <div id="collapseThree" class="collapse" aria-labelledby="headingTwo"
          data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Profile:</h6>
             <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
             <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
+	    <a class="collapse-item " href="{{ url_for('admin_case') }}">Show Case</a>
+	    <a class="collapse-item" href="{{ url_for('admin_evidence') }}">Show Latest Transactions</a>
         </div>
     </div>
 </li>
@@ -151,38 +162,30 @@
                 </div>
             </div>
         </div>
-    </div>
 
-
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Latest Transactions</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-		{% for evidence in evidence_list %}
-                <tr>
-                    <th>Date</th>
-                    <th>Case ID</th>
-                    <th>Evidence ID</th>
-                    <th>Handler Name</th>
-                    <th>Current Status</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-	            <th> {{ evidence['time'] }} </th>
-                    <th>{{ evidence['case_id'] }}</th>
-                    <th>{{ evidence['evid_id'] }}</th>
-                    <th>{{ evidence['handler'] }}</th>
-                    <th>{{ evidence['status'] }}</th>
-                </tr>
-		{% endfor %}
-                </tfoot>
-            </table>
+    <div class="break-column"></div>
+        <div class="col-xl">
+        <div class="card shadow mt-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Latest Activity</h6>
+            </div>
+            <div class="card-body" id="latest">
+                <div class="row">
+                    <div class="col mystyle">Date</div>
+                    <div class="col mystyle">Case ID</div>
+                    <div class="col mystyle">Evidence ID</div>
+                    <div class="col mystyle">Current Status</div>
+                    <div class="col mystyle">Action</div>  
+                    <div class="col mystyle">Purpose</div>              
+                </div>
+                <div id="magic"></div>
+            </div>
+            </div>
         </div>
-    </div>
+</div>
 </div>
 <!-- /.container-fluid -->
+<div class="container-fluid">
+    <div></div>
+</div>
 {% endblock %}
