@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Byte-A-Block</string>
+
+    <!--Strings for activity_intro.xml-->
+    <string name="image_contentDescription">image</string>
+    <string name="let_s_get_started_text">Let\'s Get Started!</string>
+    <string name="intro_text_description">Please log into your Investigator account! If you\'re new employee, please click on "Sign Up" to go to our official website to make a new account!</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_up">SIGN UP</string>
+
+    <!--Strings for activity_sign_in.xml-->
+    <string name="sign_in_description_text">Welcome Investigator! Please enter your username and password to sign in!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <!--Strings for dialog_progress.xml-->
+    <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
+    <string name="please_wait">Please Wait&#8230;</string>
+
+    <!--Strings for activity_main.xml-->
+    <string name="nothing_to_display">You currently have no assigned cases! Refresh again later…</string>
+
+    <!--Strings for top_menu.xml-->
+    <string name="log_out">Log out user</string>
+
+    <!--Strings for top_menu.xml-->
+    <string name="new_evidences">Add new Evidences</string>
+
+    <!--Strings for activity_case_info.xml-->
+    <string name="current_case_location_description_text">Location</string>
+    <string name="current_case_date_description_text">Date</string>
+    <string name="current_case_case_status_description_text">Case Status</string>
+    <string name="no_evidence_in_case_text">There are currently no evidences in this case!</string>
+    <string name="current_case_evidence_description_text">Evidences</string>
+
+    <!--Strings for activity_photographing_evidence.xml-->
+    <string name="take_picture_button_description_text">Take picture of the evidence</string>
+
+    <!--Strings for activity_add_evidence.xml-->
+    <string name="add_evidence_title_text">Evidence Details</string>
+    <string name="add_evidence_help_text">Please provide the following evidence details!</string>
+    <string name="add_evidence_location_hint_text">Location</string>
+    <string name="add_evidence_type_hint_text">Evidence Type (e.g. HDD, SSD, USB)</string>
+    <string name="add_evidence_serial_model_hint_text">Serial/Model No.</string>
+    <string name="add_evidence_notes_hint_text">Extra Notes</string>
+    <string name="add_evidence_button_text">Submit Evidence!</string>
+
+    <!--Strings for activity_modify_evidence.xml-->
+    <string-array name="new_evidence_status_options">
+        <item>Check Into Storage</item>
+        <item>Check Out of Storage</item>
+        <item>Analysis</item>
+        <item>Drive Cloning</item>
+        <item>Court Appearance</item>
+    </string-array>
+</resources>
