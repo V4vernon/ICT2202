@@ -27,7 +27,7 @@ Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to loo
     
     https://www.cyberciti.biz/faq/ubuntu-20-04-set-up-wireguard-vpn-server/
     
-### Setting Up
+### Prerequisites
 
 #### Getting Wallet Public Addresses
 Once you have installed the prerequisities, we can move on to the actual node setup. Given the need for security as our chain involves the storage of information with regards to the physical media containing digital evidence, we opted to add nodes manually to the chain and turn off autodiscovery for nodes
@@ -205,6 +205,80 @@ Finally note down where the contract is deployed to, so we can get the contract 
 *Sample of test contract deployment*
 
 ![ByteABlock Deploy](https://user-images.githubusercontent.com/20734215/139530925-d5811b5c-5134-473c-8cd7-eccddb064fa3.PNG)
+    
+ 
+ ### Web Server Prerequisites
+1) Python 3.7.5    
+2) MYSQL Server
+3) MYSQL Workbench    
+4) pip3 install requirements.txt 
+5) Install the prerequisites of chain_dev
+6) Execute the "forensic_blockchain.sql" file in MySQL Workbench and it will create 2 different tables (account & bitcase)
+7) Change/modify the settings as shown in the app.py file accordingly. We have set up a cloud server as the mobile app needs to be able to interface to the web application and the blockchain. 
+ 
+![image](https://user-images.githubusercontent.com/41332404/140599518-e1caf316-c2d9-4c8b-8abd-3769c2cce287.png)
+
+### How to run
+You can run the web application by running this command “python3.7 app.py” and to access the URL as shown below respectively. 
+![image](https://user-images.githubusercontent.com/41332404/140599552-a4d38f12-ddd1-4fb9-9206-d98bceb8736b.png)
+
+    
+### Features of the web application
+This section describes all the respective pages in the web application as well as the functionalities. 
+    
+![image](https://user-images.githubusercontent.com/41332404/140599601-a3a52620-34ae-4df2-9ab2-7bea9bd0e2f7.png)
+    
+    */register page*
+You will first need to register for an account before being authorized to access the web application. Upon successful registration, it will send a verification email to your email address which you will need to verify before being able to use it. 
+    
+![image](https://user-images.githubusercontent.com/41332404/140599716-df7670ac-e825-493b-b616-9c8aed86efb2.png)
+    
+     */Email Account activation*
+    
+![image](https://user-images.githubusercontent.com/41332404/140599731-4eca659b-6f34-4f4f-bd58-d78be7c4d5c3.png)
+
+     */forgotpassword *
+This page allows the investigator to reset their password if they forget their password by entering their email. If the account/email is valid, the investigator should be able to receive the following email to reset their password.
+
+![image](https://user-images.githubusercontent.com/41332404/140599766-39bbd77e-35d5-422d-87f4-cf91a6d50e3a.png)
+    
+The investigator then can reset his/her password by entering a new password and it will direct him to the login page if there is no error. 
+
+![image](https://user-images.githubusercontent.com/41332404/140599778-b19eba2e-9244-472f-96ac-db43ad7b1824.png)
+     
+![image](https://user-images.githubusercontent.com/41332404/140599783-fb445a01-2798-4be9-b987-20c041620c42.png)
+    
+    */Index page*
+
+This is the login page where the investigator can access the web application with the correct credentials. 
+    
+![image](https://user-images.githubusercontent.com/41332404/140599796-c96ff2a0-9f28-47ff-b3d0-c616a5f02cd4.png)
+    
+      */Home (Logged in with admin account)*
+ 
+This is the dashboard page where it outputs the name of the investigator, role/privileges that the investigator has, number of cases the user has and the latest 5 transactions to the blockchain such as any new statusChanged or evidenceAdded.  
+    
+![image](https://user-images.githubusercontent.com/41332404/140599813-e5ee1a9b-1186-4fda-b54b-67c9d99b2f41.png)
+  
+    */Home (Logged in with member account)*
+    
+When logged in with a higher privilege account(admin), you will be able to see the latest 5 transactions to the blockchain for all the cases. However, with a lower privilege account, you will only be able to see the latest 5 transactions to the blockchain for the cases that you oversee. This explains the reason for the empty table as the user does not have any cases.
+    
+
+
+
+
+
+    
+    
+    
+
+
+    
+    
+    
+    
+
 
 
 
