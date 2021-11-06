@@ -87,7 +87,7 @@
     <h1 class="h3 mb-4 text-gray-800">Evidence History</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Cases</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Case {{case_id}}</h6>
         </div>
         <div class="card-body">
             <div id="accordion">
@@ -96,7 +96,7 @@
                         <h6 class="mb-0">
                             <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="false"
                                aria-controls="collapse-1">
-                                Case {{case_id}}
+                                Evidence {{evid_id}}
                             </a>
                         </h6>
                     </div>
@@ -108,25 +108,19 @@
                                     <div class="card-header" id="heading-1-2">
                                         <h6 class="mb-0">
                                             <a class="collapsed" role="button" data-toggle="collapse"
-                                               href="#collapse-1-2" aria-expanded="false" aria-controls="collapse-1-2">
-                                               Evidence {{ evid_id }}
+                                               href="#collapse-1-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-1-{{ loop.index }}">
+						    {{ evidence['time'] }}
                                             </a>
                                         </h6>
                                     </div>
-                                    <div id="collapse-1-2" class="collapse" data-parent="#accordion-1"
-                                         aria-labelledby="heading-1-2">
+                                    <div id="collapse-1-{{ loop.index }}" class="collapse" data-parent="#accordion-1"
+                                         aria-labelledby="heading-1-{{ loop.index }}">
                                         <div class="list-group">
                                             <a href="#" class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h6 class="mb-1">Handler</h6>
                                                 </div>
                                                 <small>{{ evidence['handler'] }}</small>
-                                            </a>
-                                             <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1">Time</h6>
-                                                </div>
-                                                <small>{{ evidence['time'] }}</small>
                                             </a>
                                             <a href="#" class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
