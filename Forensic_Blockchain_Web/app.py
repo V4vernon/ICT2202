@@ -56,10 +56,10 @@ abi = json.load(rf)
 rf.close()
 
 # Get the deployed contract from the chain as a brownie contract object
-contract = Contract.from_abi("ByteABlock", "0x000e7cE22b6f63EA7E75408a61649F798538F05E", abi=abi)
+contract = Contract.from_abi("ByteABlock", "0x2FcF443ECEff00B375daf6772705317Ad53eB8Ff", abi=abi)
 
 # Get the deployed contract from the chain as a web3 contract object (required for using filters)
-contract_w3 = web3.eth.contract(address="0x000e7cE22b6f63EA7E75408a61649F798538F05E", abi=abi)
+contract_w3 = web3.eth.contract(address="0x2FcF443ECEff00B375daf6772705317Ad53eB8Ff", abi=abi)
 
 
 
@@ -1067,4 +1067,4 @@ def check_evidence_api_call():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)
