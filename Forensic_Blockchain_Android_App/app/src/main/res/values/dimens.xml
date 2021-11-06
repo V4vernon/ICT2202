@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_screen_title_text_size">70sp</dimen>
+
+    <!-- Dimensions for the activity_intro.xml views-->
+    <dimen name="intro_screen_title_text_size">40sp</dimen>
+    <dimen name="intro_screen_title_text_marginTop">40dp</dimen>
+    <dimen name="intro_screen_image_marginTop">30dp</dimen>
+    <dimen name="lets_get_started_text_marginTop">25dp</dimen>
+    <dimen name="lets_get_started_text_size">25sp</dimen>
+    <dimen name="intro_text_marginStartEnd">20dp</dimen>
+    <dimen name="intro_text_line_spacing_extra">5dp</dimen>
+    <dimen name="intro_text_marginTop">10dp</dimen>
+    <dimen name="intro_text_size">16sp</dimen>
+    <dimen name="btn_marginStartEnd">20dp</dimen>
+    <dimen name="intro_screen_sign_in_btn_marginTop">20dp</dimen>
+    <dimen name="btn_paddingTopBottom">8dp</dimen>
+    <dimen name="intro_screen_sign_up_btn_marginTop">15dp</dimen>
+    <dimen name="btn_text_size">18sp</dimen>
+
+    <!-- Dimensions for the activity_sign_in.xml views-->
+    <dimen name="toolbar_title_text_size">18sp</dimen>
+    <dimen name="authentication_screen_content_marginTop">40dp</dimen>
+    <dimen name="authentication_description_text_size">16sp</dimen>
+    <dimen name="authentication_screen_marginStartEnd">25dp</dimen>
+    <dimen name="authentication_screen_til_marginTop">20dp</dimen>
+    <dimen name="authentication_screen_marginTop">60dp</dimen>
+    <dimen name="authentication_screen_til_marginStartEnd">16dp</dimen>
+    <dimen name="card_view_elevation">10dp</dimen>
+    <dimen name="card_view_corner_radius">10dp</dimen>
+    <dimen name="card_view_layout_content_padding">16dp</dimen>
+    <dimen name="et_text_size">16sp</dimen>
+    <dimen name="sign_in_screen_btn_marginTop">60dp</dimen>
+
+    <!-- Dimensions for the dialog_progress.xml views-->
+    <dimen name="progress_dialog_content_padding">10dp</dimen>
+    <dimen name="progress_bar_size">50dp</dimen>
+    <dimen name="progress_text_marginStart">16dp</dimen>
+    <dimen name="progress_text_size">16sp</dimen>
+
+    <!-- Dimensions for the activity_main.xml views-->
+    <dimen name="no_cases_textview_text_size">20sp</dimen>
+
+    <!-- Dimensions for the case_list_row.xml views-->
+    <dimen name="case_number_list_text_size">50sp</dimen>
+    <dimen name="location_list_text_size">16sp</dimen>
+    <dimen name="case_status_list_text_size">16sp</dimen>
+    <dimen name="case_list_icon_status_width">80dp</dimen>
+    <dimen name="case_list_icon_status_height">80dp</dimen>
+
+    <!-- Dimensions for the activity_case_info.xml views-->
+    <dimen name="case_info_layout_padding">16dp</dimen>
+    <dimen name="nested_case_info_layout_text_padding">20dp</dimen>
+    <dimen name="case_attribute_text_size">30sp</dimen>
+    <dimen name="case_info_text_size">24sp</dimen>
+    <dimen name="current_case_info_top_padding">10dp</dimen>
+    <dimen name="current_case_attributes_top_padding">30dp</dimen>
+
+    <!-- Dimensions for the evidence_list_row.xml views-->
+    <dimen name="evidence_list_icon_status_width">80dp</dimen>
+    <dimen name="evidence_list_icon_status_height">80dp</dimen>
+    <dimen name="evidence_list_info_top_padding">16dp</dimen>
+    <dimen name="evidence_list_name_attribute_text_size">20sp</dimen>
+    <dimen name="evidence_list_info_text_size">16sp</dimen>
+
+    <!-- Dimensions for the activity_photographing_evidence.xml views-->
+    <dimen name="evidence_image_margin_top">32dp</dimen>
+    <dimen name="take_picture_button_height">80dp</dimen>
+    <dimen name="take_picture_button_margin_top">32dp</dimen>
+    <dimen name="take_picture_button_text_size">16sp</dimen>
+
+    <!-- Dimensions for the activity_add_evidence.xml views-->
+    <dimen name="add_evidence_top_margin_title">40dp</dimen>
+    <dimen name="add_evidence_title_text_size">30sp</dimen>
+    <dimen name="add_evidence_hint_text_size">16sp</dimen>
+    <dimen name="add_evidence_card_elevation">10dp</dimen>
+    <dimen name="add_evidence_card_margin_start">25dp</dimen>
+    <dimen name="add_evidence_card_margin_top">60dp</dimen>
+    <dimen name="add_evidence_card_margin_end">25dp</dimen>
+    <dimen name="add_evidence_card_corner_radius">10dp</dimen>
+    <dimen name="add_evidence_card_inner_padding">16dp</dimen>
+    <dimen name="add_evidence_text_field_margin_start">16dp</dimen>
+    <dimen name="add_evidence_text_field_margin_top">20dp</dimen>
+    <dimen name="add_evidence_text_field_margin_end">16dp</dimen>
+    <dimen name="add_evidence_input_field_text_size">16sp</dimen>
+</resources>
