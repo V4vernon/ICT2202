@@ -226,57 +226,147 @@ You can run the web application by running this command “python3.7 app.py” a
 ### Features of the web application
 This section describes all the respective pages in the web application as well as the functionalities. 
     
-![image](https://user-images.githubusercontent.com/41332404/140599601-a3a52620-34ae-4df2-9ab2-7bea9bd0e2f7.png)
-    
+![CAPTURE](https://user-images.githubusercontent.com/41332404/140614854-48d4c70b-2ff6-4aa1-ad1e-705e7e8789b8.png)
+   
     */register page*
 You will first need to register for an account before being authorized to access the web application. Upon successful registration, it will send a verification email to your email address which you will need to verify before being able to use it. 
     
-![image](https://user-images.githubusercontent.com/41332404/140599716-df7670ac-e825-493b-b616-9c8aed86efb2.png)
+![Capture](https://user-images.githubusercontent.com/41332404/140615026-1315cf30-df6b-45c8-a0b3-c32274d73a54.PNG)
     
      */Email Account activation*
-    
-![image](https://user-images.githubusercontent.com/41332404/140599731-4eca659b-6f34-4f4f-bd58-d78be7c4d5c3.png)
+
+![Capture](https://user-images.githubusercontent.com/41332404/140615065-78f52640-19ae-4790-836e-427d4c74ce50.PNG)
 
      */forgotpassword *
 This page allows the investigator to reset their password if they forget their password by entering their email. If the account/email is valid, the investigator should be able to receive the following email to reset their password.
 
-![image](https://user-images.githubusercontent.com/41332404/140599766-39bbd77e-35d5-422d-87f4-cf91a6d50e3a.png)
+![Capture](https://user-images.githubusercontent.com/41332404/140615094-ef34e4c1-9894-429f-b244-2e94f8b1b931.PNG)
     
 The investigator then can reset his/her password by entering a new password and it will direct him to the login page if there is no error. 
 
-![image](https://user-images.githubusercontent.com/41332404/140599778-b19eba2e-9244-472f-96ac-db43ad7b1824.png)
-     
-![image](https://user-images.githubusercontent.com/41332404/140599783-fb445a01-2798-4be9-b987-20c041620c42.png)
+![Capture2](https://user-images.githubusercontent.com/41332404/140615720-d4b70359-ba49-4b7a-b89c-b5489027badf.PNG)
+
+![2021-11-06_23-51-44](https://user-images.githubusercontent.com/41332404/140615648-eebcc43c-422d-4abf-9743-3fbc971cfad8.png)
+
     
     */Index page*
 
 This is the login page where the investigator can access the web application with the correct credentials. 
     
-![image](https://user-images.githubusercontent.com/41332404/140599796-c96ff2a0-9f28-47ff-b3d0-c616a5f02cd4.png)
+![2021-11-06_23-56-17](https://user-images.githubusercontent.com/41332404/140615822-c0096f75-a519-43dd-aa3e-cf218130268d.png)
+
     
       */Home (Logged in with admin account)*
  
 This is the dashboard page where it outputs the name of the investigator, role/privileges that the investigator has, number of cases the user has and the latest 5 transactions to the blockchain such as any new statusChanged or evidenceAdded.  
     
-![image](https://user-images.githubusercontent.com/41332404/140599813-e5ee1a9b-1186-4fda-b54b-67c9d99b2f41.png)
+![Capture](https://user-images.githubusercontent.com/41332404/140615862-cda06bc9-551e-4f89-942a-db6d4afd7963.PNG)
   
     */Home (Logged in with member account)*
     
 When logged in with a higher privilege account(admin), you will be able to see the latest 5 transactions to the blockchain for all the cases. However, with a lower privilege account, you will only be able to see the latest 5 transactions to the blockchain for the cases that you oversee. This explains the reason for the empty table as the user does not have any cases.
     
 
+![Capture](https://user-images.githubusercontent.com/41332404/140616103-f542ea6b-6266-40cf-bfee-86c2a4b592a6.PNG)
+
+ 
+    */Profile*
+
+On the profile page, the investigator can only view their account details such as username, email & role. 
+    
+
+![2021-11-07_0-07-52](https://user-images.githubusercontent.com/41332404/140616162-1ffbe118-2f14-4dbd-82c9-6f248475ff9d.png)
+    
+    
+    */Edit_Profile*
+    
+Investigators can choose to edit the account details such as changing the username, password & email.
+  
+ 
+![Capture](https://user-images.githubusercontent.com/41332404/140616284-69e6283e-ca74-4919-b4ca-312af28a4ae3.PNG)
 
 
+     */Case*
+    
+Investigators can view all the case details that they are assigned to such as the case ID, case name, date, assigned_to, location, status, and evidence. To view the evidence of each case, the investigator would have to click the view button. 
+    
+    
+
+![image](https://user-images.githubusercontent.com/41332404/140616736-738df143-fcea-47b9-ad1e-c28c7c37678e.png)
 
 
     
+     */Show_Case*
+    
+Upon clicking the view evidence button, the show_case page shows a list of evidence that the case contains such as the handler, location, Image_Hash, Evidence Type, Serial Number, Model, Status, Purpose, Notes, Time. 
+    
+    
+    
+![Capture](https://user-images.githubusercontent.com/41332404/140616612-1b8877f3-fb00-4641-9acc-4bf1527f0faa.PNG)
+
+ 
+     */evidence_history*
+    
+To view the check-in/check-out history of the evidence, we can click “show evidence history” where gives us the evidence timeline.
+  
+
+ 
+![Capture](https://user-images.githubusercontent.com/41332404/140616842-c3c7a2ae-61c5-40de-87ea-b8c4e668c624.PNG)
+ 
+    
+     */Case_Add*
+    
+    
+Investigator can create a new case and it will be populated to the database. 
+
+
+
+![Capture](https://user-images.githubusercontent.com/41332404/140616908-a9a92919-a8a7-4ebf-b851-88695882d387.PNG)
+
+   
+      */Admin*
+
+Investigators can only access the admin portal if their account role is set to “admin”. The first page of the admin portal allows the investigator to view all the account details registered in the web application.
+    
+    
+    
+    
+![Capture](https://user-images.githubusercontent.com/41332404/140616936-a4c027d5-7bde-4487-86d5-1216ac1f0f20.PNG)
+
+    
+     */Admin/Account*
+ 
+The second page of the admin portal allows the investigator to add new accounts. 
+    
+    
+    
+ ![Capture](https://user-images.githubusercontent.com/41332404/140616996-8e6b6bde-0cc1-4b59-90da-83240d198c86.PNG)
+
+    
+    */Admin/case*
+ 
+The third page of the admin portal allows the investigator to view & edit all case details including those that are not owned by the admin.
     
     
 
+ ![Capture](https://user-images.githubusercontent.com/41332404/140617024-2af77c54-bd55-42b2-907b-1e7f090eb704.PNG)
+
+  
+
+    */Admin/editcase*
+    
+    
+![Capture](https://user-images.githubusercontent.com/41332404/140617044-6a789429-5736-4864-bde4-b28388ae0fab.PNG)
+    
+    
+    */Admin/evidence*
+    
+    
+The last page of the admin portal allows the investigator to view all the transaction details/activity in the blockchain as shown in the image.
+
 
     
-    
-    
+
     
 
 
