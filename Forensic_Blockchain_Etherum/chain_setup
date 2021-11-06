@@ -1,0 +1,101 @@
+#!/bin/bash
+echo "Please ensure you are in the correct directory prior to running this script"
+echo -e "Your current directory is $PWD\n"
+echo Please Choose what you would like to do:
+echo "1) Setup Blockchain"
+echo "2) Run nodes"
+echo "3) List nodes you are connected to"
+echo "4) List your enode id"
+read initResponse
+
+if [[ $initResponse == 1 ]];
+then
+	# Check if node1 and node2 folders exist, if not create them
+	if [[ ! -d "node1" ]];
+	then
+		mkdir node1
+		node1Pwd="P@ssw0rd1"
+		node1Output=$(geth --datadir node1 account new --password <(echo $node1Pwd))
+		#Get Public address of a/c
+		node1Addr=$(echo $node1Output | cut -d ' ' -f 11)
+		echo $node1Addr >> nodes_info.txt
+		echo $node1Pwd > node1/password.txt
+	fi
+
+	if [[ ! -d "node2" ]];
+	then
+		mkdir node2
+		node2Pwd="P@ssw0rd2"
+		node2Output=$(geth --datadir node2 account new --password <(echo $node2Pwd))
+		#Get Public address of a/c
+		node2Addr=$(echo $node2Output | cut -d ' ' -f 11)
+		echo $node2Addr >> nodes_info.txt
+		echo $node2Pwd > node2/password.txt
+	fi
+
+	echo This will initialize genesis block on nodes. Are you sure you want to continue?
+	read genesisStageResponse
+	if [ $genesisStageResponse == "yes" ];
+	then
+		echo Enter your genesis file name:
+		read genesisFile
+		# Create new accounts for nodes
+		if [[ -f "$genesisFile" ]];
+		then
+			genesis1Output=$(geth --datadir node1/ init $genesisFile)
+			echo $genesis1Output
+			genesis2Output=$(geth --datadir node2/ init $genesisFile)
+			echo $genesis2Output
+		fi
+	fi
+elif [[ $initResponse == 2 ]];
+then
+	echo Do you have a configuration file?
+	read configResponse
+	if [[ $configResponse == "no" ]];
+	then
+		echo Enter node name:
+		read nodeName
+		echo Enter node port:
+		read nodePort
+		echo Enter HTTP IP Addr:
+		read httpIPAddr
+		echo Enter HTTP IP Port:
+		read httpIPPort
+		echo Enter Network ID:
+		read networkID
+		echo Enter A/C to unlock:
+		read unlockAc
+		echo Enter Gas Limit:
+		read gasLimit
+		#Save entered information for future usage
+		printf "%s,%s,%s,%s,%s,%s,%s\n" $nodeName $nodePort $httpIPAddr $httpIPPort $networkID $unlockAc $gasLimit>> saved_nodes.txt
+		nohup geth --datadir $nodeName --syncmode 'full' --port $nodePort --nat extip:$httpIPAddr --netrestrict 10.7.0.0/24 --http --http.addr $httpIPAddr --http.port $httpIPPort --http.api 'personal,eth,net,web3' --http.corsdomain '*' --networkid $networkID --miner.gasprice 0 --unlock $unlockAc --password $nodeName/password.txt --mine --allow-insecure-unlock --miner.gaslimit $gasLimit --nodiscover </dev/null &>/dev/null &
+	elif [[ $configResponse == "yes" ]];
+	then
+		echo Which node do you want to start?
+		read nodeToStart
+		inputFile="saved_nodes.txt"
+		#Read each line into an array
+		readarray -t nodesArray < $inputFile
+		#Split string by comma
+		if [[ ! -z $nodesArray ]];
+		then
+			IFS="," read -ra nodeValues <<< $(echo ${nodesArray[$nodeToStart-1]})
+			nohup geth --datadir ${nodeValues[0]} --syncmode 'full' --port ${nodeValues[1]} --nat extip:${nodeValues[2]} --netrestrict 10.7.0.0/24 --http --http.addr ${nodeValues[2]} --http.port ${nodeValues[3]} --http.api 'personal,eth,net,web3' --http.corsdomain '*' --networkid ${nodeValues[4]} --miner.gasprice 0 --unlock ${nodeValues[5]} --password ${nodeValues[0]}/password.txt --mine --allow-insecure-unlock --miner.gaslimit ${nodeValues[6]} --nodiscover </dev/null &>/dev/null &
+		elif [[ -z $nodesArray ]];
+		then
+			echo "Configuration file is empty"
+		fi
+	fi
+elif [[ $initResponse == 3 ]];
+then
+	echo Listing nodes you are connected to...
+	geth attach node1/geth.ipc --exec admin.peers
+elif [[ $initResponse == 4 ]];
+then
+	echo "Listing your enode number (for connection purposes)..."
+	IFS="?" read -ra enodeValue <<< $(geth attach node1/geth.ipc --exec admin.nodeInfo.enode)
+	echo ${enodeValue[0]}\" 
+fi
+
