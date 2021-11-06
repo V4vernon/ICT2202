@@ -1,0 +1,259 @@
+[
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "_caseId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "_evidId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "_handlerId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "_currStatus",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "_serialNo",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "date",
+                "type": "uint256"
+            }
+        ],
+        "name": "evidenceAdded",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "_caseId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "_evidId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "_handlerId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "_currStatus",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "_imageHash",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "_purpose",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "date",
+                "type": "uint256"
+            }
+        ],
+        "name": "statusChanged",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_caseId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_evidId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_handlerId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_imageHash",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_evidType",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_serialNo",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_model",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_currStatus",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_purpose",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_notes",
+                "type": "string"
+            }
+        ],
+        "name": "addEvidenceItem",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "centralStore",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "handlerId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "imageHash",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "evidType",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "serialNo",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "model",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "currStatus",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "purpose",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "notes",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_caseId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_evidId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_handlerId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_newStatus",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_imageHash",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_purpose",
+                "type": "string"
+            }
+        ],
+        "name": "modifyEvidenceStatus",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]
