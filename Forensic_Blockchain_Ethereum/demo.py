@@ -50,7 +50,7 @@ abi = json.load(rf)
 rf.close()
 
 # Get the deployed contract from the chain as a brownie contract object
-contract = Contract.from_abi("ByteABlock", "0x000e7cE22b6f63EA7E75408a61649F798538F05E", abi=abi)
+contract = Contract.from_abi("ByteABlock", "0x2FcF443ECEff00B375daf6772705317Ad53eB8Ff", abi=abi)
 
 # Getting information about transaction from block (continued)
 # Get information from the transactionReceipt Object
@@ -91,7 +91,7 @@ contract.addEvidenceItem.call(2,4,1,"SIT","4523agvc","Storage","4673","WD SN550"
 contract.modifyEvidenceStatus.call(1,1,2,"For Storage","1492dbcf","Check-In for Storage",{'from': accounts[0], 'gas_price':0})
 
 # Get the deployed contract from the chain as a web3 contract object (required for using filters)
-contract_w3 = web3.eth.contract(address="0x000e7cE22b6f63EA7E75408a61649F798538F05E", abi=abi)
+contract_w3 = web3.eth.contract(address="0x2FcF443ECEff00B375daf6772705317Ad53eB8Ff", abi=abi)
 # print(contract_w3.centralStore(1,2))
 # If you want to use web3 to call contract functions, reference web3.py documentationb
 
