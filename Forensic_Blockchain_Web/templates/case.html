@@ -1,0 +1,127 @@
+{% extends "dashboard_base.html" %}
+{% block title %} Case {% endblock %}
+{% block content %}
+
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Nav Item - Profile -->
+<li class="nav-item">
+    <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseTwo"
+       aria-expanded="true"
+       aria-controls="collapseTwo">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span>Profile</span></a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+         data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Profile:</h6>
+            <a class="collapse-item" href="{{ url_for('profile') }}">Show Profile</a>
+            <a class="collapse-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+        </div>
+    </div>
+</li>
+
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Nav Item - Case -->
+<li class="nav-item">
+    <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapsefour"
+       aria-expanded="true"
+       aria-controls="collapsefour">
+        <i class="fa fa-briefcase" aria-hidden="true"></i>
+        <span>Case</span></a>
+    <div id="collapsefour" class="collapse" aria-labelledby="headingTwo"
+         data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Case Details:</h6>
+            <a class="collapse-item active" href="{{ url_for('Case') }}">Show Case</a>
+            <a class="collapse-item" href="{{ url_for('Case_Add') }}">Add Case</a>
+        </div>
+    </div>
+</li>
+
+{% if role == 'Admin' %}
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Nav Item - Admin -->
+<li class="nav-item">
+    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree"
+       aria-expanded="true"
+       aria-controls="collapseThree">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span>Admin</span></a>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingTwo"
+         data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Profile:</h6>
+            <a class="collapse-item " href="{{ url_for('admin') }}">Show Accounts</a>
+            <a class="collapse-item " href="{{ url_for('admin_account') }}">Add Accounts</a>
+	    <a class="collapse-item " href="{{ url_for('admin_case') }}">Show Case</a>
+	    <a class="collapse-item" href="{{ url_for('admin_evidence') }}">Show Latest Transactions</a>
+        </div>
+    </div>
+</li>
+{% endif %}
+
+{% endblock %}
+
+{% block user %}{{ username }}{% endblock %}
+{% block content1 %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Case</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Case Details</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Case Name</th>
+                            <th>Case Date</th>
+                            <th>Assigned To</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Evidence</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <form action="{{ url_for('Show_Case') }}" method="post">
+                        {% for case,date_list in data %}
+                        <tr>
+                            <th>{{ case['id'] }}</th>
+                            <th>{{ case['case_name'] }}</th>
+                            <th>{{ date_list }}</th>
+                            <th>{{ username }}</th>
+                            <th>{{ case['location'] }}</th>
+                            <th>{{ case['status'] }}</th>
+                            <th><button type="submit"  name="id" value="{{ case['id'] }}" class="form-control btn btn-primary rounded submit px-3">View </button></th>
+                        </tr>
+			{% endfor %}
+                        </tfoot>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+{% endblock %}
