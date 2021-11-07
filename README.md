@@ -1,5 +1,5 @@
-# Home of what powers Byte-A-Block
-Hi, welcome to the blockchain home of the Byte-A-Block project. Feel free to look around and make yourself at home.
+# ByteABlock
+Hi welcome to the ByteABlock repository. ByteABlock is an evidence management system for physical media that contains digital evidences. Below you would find steps on how to configure and use it
 
 ## Getting Started
 
