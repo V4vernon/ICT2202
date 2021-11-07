@@ -195,9 +195,9 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
 3) Go back to the main project folder, to prepare to deploy the contract
 
 #### Deploying a contract
-To deploy a contract, first ensure that the contract ByteABlock.sol is in the brownie contracts folder first (ie ByteABlock/brownie/contracts)
+To deploy a contract, first ensure that the contract ByteABlock.sol, that is present in the ethereum folder in this repository, is in the brownie contracts folder first (ie ByteABlock/brownie/contracts)
 
-Then run deploy.py using `python3.7 deploy.py`
+Then run deploy.py found again in the ethereum folder of this repository using `python3.7 deploy.py`
 
 Finally note down where the contract is deployed to, so we can get it from the blockchain in the app.py file 
 
@@ -221,7 +221,8 @@ Finally note down where the contract is deployed to, so we can get it from the b
 ![image](https://user-images.githubusercontent.com/41332404/140599518-e1caf316-c2d9-4c8b-8abd-3769c2cce287.png)
 
 ### How to run
-You can run the web application by running this command “python3.7 app.py” and to access the URL as shown below respectively. 
+You can run the web application by running this command “python3.7 app.py” and to access the URL as shown below respectively.
+    
 ![image](https://user-images.githubusercontent.com/41332404/140599552-a4d38f12-ddd1-4fb9-9206-d98bceb8736b.png)
 
     
