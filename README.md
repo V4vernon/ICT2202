@@ -32,7 +32,7 @@ Hi welcome to the ByteABlock repository. ByteABlock is an evidence management sy
 #### Getting Wallet Public Addresses
 Once you have installed the prerequisities, we can move on to the actual node setup. Given the need for security as our chain involves the storage of information with regards to the physical media containing digital evidence, we opted to add nodes manually to the chain and turn off autodiscovery for nodes
 
-We wrote a bash script to simplify the setup process somewhat, especially some of the repetitive steps.
+We wrote a bash script, that can be found in the ethereum folder of this repository, to simplify the setup process somewhat especially some of the repetitive steps.
 
 Firstly to start setting up, run this in your terminal, on every single VM that should be added to the network (more clarifications on this later)
 
