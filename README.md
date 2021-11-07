@@ -197,7 +197,7 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
 #### Deploying a contract
 To deploy a contract, first ensure that the contract ByteABlock.sol is in the brownie contracts folder first (ie ByteABlock/brownie/contracts)
 
-Then call `ByteABlock.deploy({'from':accounts[0], 'gas_price': 0})` while connected to the network. 
+Then call the `deploy_and_get_abi()` helper function in demo.py while connected to the network. 
 More details of connecting to the network can be found in demo.py
 
 Finally note down where the contract is deployed to, so we can get the contract in the future.
