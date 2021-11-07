@@ -178,7 +178,7 @@ Verify that you are connected to the rest of the nodes by running chain_setup, a
 If you don't see all the nodes that are supposed to be in your network, check your static-nodes.json file in the previous step, or if that fails run the actual geth command from the chain_setup file directly in the console with verbosity 5, and observe the output for errors.
 
 ```
-geth --datadir node1 --syncmode full --port xxxxx --nat extip:x.x.x.x --netrestrict x.x.x.x/y --http --http.addr x.x.x.x --http.port xxxx --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid xxxx --miner.gasprice 0 --unlock '0x12345678' --password node[num]/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
+geth --datadir node1 --syncmode full --port xxxxx --nat extip:x.x.x.x --netrestrict x.x.x.x/y --http --http.addr x.x.x.x --http.port zzzz --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid rrrr --miner.gasprice 0 --unlock '0x12345678' --password node[num]/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
 ```
 
 ### Using the brownie and web3.py APIs
@@ -190,15 +190,16 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
     `mkdir brownie && cd brownie && brownie init`
 2) Then tell brownie about the network we created earlier
 
-    `brownie networks add live byteablock host=http://10.7.0.x:xxxx chainid=xxxx name="ByteABlock Network"`
+    `brownie networks add live byteablock host=http://x.x.x.x:yyyy chainid=zzzz name="ByteABlock Network"`
     
 3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains commented examples as to how to use the APIs
 
 #### Deploying a contract
 To deploy a contract, first ensure that the contract ByteABlock.sol is in the brownie contracts folder first (ie ByteABlock/brownie/contracts)
 
-Then call the `deploy_and_get_abi()` helper function in demo.py while connected to the network. 
-More details of connecting to the network can be found in demo.py
+Then call the `deploy_and_get_abi()` helper function in demo.py while connected to the network.
+
+![Deploy_Helper](https://user-images.githubusercontent.com/20734215/140631848-3e3f5d54-8ea5-44d3-96dc-588db5d988e9.PNG)
 
 Finally note down where the contract is deployed to, so we can get it from the blockchain in the app.py file 
 
@@ -208,7 +209,7 @@ Finally note down where the contract is deployed to, so we can get it from the b
     
 *Sample of retrieving deployed contract in app.py*
 
-![app py get deployed contract](https://user-images.githubusercontent.com/20734215/140631742-9e4709ad-4b44-4791-abae-b194232bb795.PNG)
+![app py get deployed contract](https://user-images.githubusercontent.com/20734215/140631792-c5fe8636-676e-4d73-9fda-2ac9ef9ab21f.PNG)
 
  ### Web Server Prerequisites
 1) Python 3.7.5    
