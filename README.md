@@ -365,7 +365,89 @@ The third page of the admin portal allows the investigator to view & edit all ca
 The last page of the admin portal allows the investigator to view all the transaction details/activity in the blockchain as shown in the image.
 
 
-    
+    ## Features of Mobile App
+
+As the user opens up the app, they are greeted by a sign in/up page:
+
+![image-20211107090203255](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090203255.png)
+
+Since signing up is already implemented on the web server, we would not want to duplicate the function on the mobile app as well. The sign up button will bring the user directly to our register web page:
+
+![image-20211107090313360](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090313360.png)
+
+All the user would have to do next is just to log in to get to the main page:
+
+![image-20211107090434702](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090434702.png)
+
+Once the user logs in with the correct credentials, they will be greeted by the main page of cases that were assigned to him:
+
+- Some cases' investigation were concluded while others are still ongoing
+- Cases are named YYYY-####, Y representing the year, # representing the case number of the year
+- The top right icon allows the user to log out of the app he wants to
+
+![image-20211107090642877](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090642877.png)
+
+Clicking on any of the cases above brings up the case information page, alongside the evidences that belong to a certain case:
+
+![image-20211107094813551](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107094813551.png)
+
+If we click the top right icon in the case information page, we would be able to add new evidences into the case. The investigator would first need to take a photo of the evidence:
+
+![image-20211107095050416](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095050416.png)
+
+The investigator confirming the picture taken of the evidence
+
+![image-20211107095159445](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095159445.png)
+
+The investigator can choose whether to confirm the photo taken is what he wanted as well, if not he can always take the photo again:
+
+![image-20211107095449005](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095449005.png)
+
+The investigator filling up contextual details about the evidence:
+
+![image-20211107095554066](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095554066.png)
+
+![image-20211107095611519](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095611519.png)
+
+Once that is done, the investigator can press the "Submit Evidence!" button to post the photo and contextual details of the evidence into the web server:
+
+![image-20211107095733858](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095733858.png)
+
+As the investigator can see, the new evidence has been added into the case:
+
+![image-20211107095907520](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095907520.png)
+
+If the investigator would like to view the evidence that is added into the case, he can just tap into it to view:
+
+![image-20211107100001004](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100001004.png)
+
+If the investigator would like to take an evidence out for analysis, all he has to do is to select the specific evidence he wants to retrieve from the physical evidence storage:
+
+![image-20211107100129201](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100129201.png)
+
+The investigator sees that the chain of custody of the evidence currently is in the evidence storage:
+
+![image-20211107100238498](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100238498.png)
+
+Next, he would just need to click on the top right icon in the screen shot above to proceed to taking photo of the evidence he is taking out of the evidence storage (Similar to the investigator adding a new evidence into the case):
+
+![image-20211107100341390](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100341390.png)
+
+The user can select one of the following as to what he would like to do with the evidence (For other reasons not stated in the drop down menu, select "Check Out of Storage" and provide the reason in the Description text):
+
+![image-20211107100502933](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100502933.png)
+
+Fill up the rest of the information and the investigator can take over the evidence:
+
+![image-20211107100556390](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100556390.png)
+
+Once the investigator is done, he can press the "Modify Evidence Status!" button to post the information with regards to his take over (Photo of the evidence, reasons as to why he took over the evidence) into the web server.
+
+![image-20211107100809755](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100809755.png)
+
+The investigator can see on the Evidence Chain of Custody timeline has been updated after the status was modified:
+
+![image-20211107101130481](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107101130481.png)
 
     
 
