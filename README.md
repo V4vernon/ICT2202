@@ -86,11 +86,11 @@ Fourthly, for how many seconds should blocks take, enter 0 (meaning that a new b
 
 Fifthly, for which accounts are allowed to seal, specify the public wallet addresses of all the nodes, an example for one node is shown below
 
-![Sealer_Accounts](https://user-images.githubusercontent.com/20734215/139520989-fc7476c5-9700-4f03-8185-f9217f01f235.PNG)
+![Account_Seal_New](https://user-images.githubusercontent.com/20734215/140631659-b435543f-7334-4247-90be-09ec5b645d43.PNG)
 
 Afterwhich, do the same thing as above for which accounts should be prefunded
 
-![PreFund](https://user-images.githubusercontent.com/20734215/139521037-58264e29-b5f1-43f2-b037-897aa05fbc36.PNG)
+![Pre_Fund_New](https://user-images.githubusercontent.com/20734215/140631683-55f283a4-e4ed-45d6-af87-5de2dca1a1f5.PNG)
 
 Following which, for whether precompile addresses should be funded, enter yes, though these accounts would be deleted later
 
@@ -111,7 +111,7 @@ Enter 2 for export genesis configuration, followed by enter when asked whether y
 ![genesis_export](https://user-images.githubusercontent.com/20734215/139522913-89caede7-3c42-4fad-b996-1df5fd97b996.PNG)
 
 
-Last but not least, open your genesis file and remove all the precompiled addresses under alloc, or put it simply those public addresses that you did not add manually earlier. Then change the gas limit to 0xe4e1c0 (15000000). Your completed genesis file should look like the byteablock.json present in this repository.
+Last but not least, open your genesis file and remove all the precompiled addresses under alloc, or put it simply those public addresses that you did not add manually earlier. Then change the gas limit to 0xe4e1c0 (15000000). Your completed genesis file should similar to the byteablock.json present in this repository.
 
 This sums up how to create the genesis file, which only needs to be done once. Next, we need to initialize the nodes with the genesis file we created
 
@@ -131,7 +131,7 @@ The chain_setup script can also be used to run the nodes. As it does not know ab
 
 This node definition will be saved in a file, saved_nodes.txt, so subsequent starting of this added node is simpler.
 
-![Run_Nodes_1](https://user-images.githubusercontent.com/20734215/139521914-b26556fd-ba63-46a3-8727-bf3788b2d7c6.PNG)
+![Run_Node](https://user-images.githubusercontent.com/20734215/140631598-83280ba4-76f7-4e9b-a797-b8d394bc5a36.PNG)
 
 After the relevant details are given, the script will attempt to start a geth node running in the background.
 
@@ -178,7 +178,7 @@ Verify that you are connected to the rest of the nodes by running chain_setup, a
 If you don't see all the nodes that are supposed to be in your network, check your static-nodes.json file in the previous step, or if that fails run the actual geth command from the chain_setup file directly in the console with verbosity 5, and observe the output for errors.
 
 ```
-geth --datadir node1 --syncmode full --port xxxxx --nat extip:10.7.0.x --netrestrict 10.7.0.0/24 --http --http.addr 10.7.0.x --http.port 85xx --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid xxxx --miner.gasprice 0 --unlock '0x12345678' --password node1/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
+geth --datadir node1 --syncmode full --port xxxxx --nat extip:x.x.x.x --netrestrict x.x.x.x/y --http --http.addr x.x.x.x --http.port xxxx --http.api personal,eth,net,web3 --http.corsdomain '*' --networkid xxxx --miner.gasprice 0 --unlock '0x12345678' --password node[num]/password.txt --mine --allow-insecure-unlock --miner.gaslimit 15000000 --nodiscover --verbosity 5
 ```
 
 ### Using the brownie and web3.py APIs
@@ -200,13 +200,16 @@ To deploy a contract, first ensure that the contract ByteABlock.sol is in the br
 Then call the `deploy_and_get_abi()` helper function in demo.py while connected to the network. 
 More details of connecting to the network can be found in demo.py
 
-Finally note down where the contract is deployed to, so we can get the contract in the future.
+Finally note down where the contract is deployed to, so we can get it from the blockchain in the app.py file 
 
 *Sample of test contract deployment*
 
 ![ByteABlock Deploy](https://user-images.githubusercontent.com/20734215/139530925-d5811b5c-5134-473c-8cd7-eccddb064fa3.PNG)
     
- 
+*Sample of retrieving deployed contract in app.py*
+
+![app py get deployed contract](https://user-images.githubusercontent.com/20734215/140631742-9e4709ad-4b44-4791-abae-b194232bb795.PNG)
+
  ### Web Server Prerequisites
 1) Python 3.7.5    
 2) MYSQL Server
