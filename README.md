@@ -223,7 +223,7 @@ You can run the web application by running this command “python3.7 app.py” a
 ![image](https://user-images.githubusercontent.com/41332404/140599552-a4d38f12-ddd1-4fb9-9206-d98bceb8736b.png)
 
     
-### Features of the web application
+## Features of the web application
 This section describes all the respective pages in the web application as well as the functionalities. 
     
 ![CAPTURE](https://user-images.githubusercontent.com/41332404/140614854-48d4c70b-2ff6-4aa1-ad1e-705e7e8789b8.png)
@@ -365,19 +365,19 @@ The third page of the admin portal allows the investigator to view & edit all ca
 The last page of the admin portal allows the investigator to view all the transaction details/activity in the blockchain as shown in the image.
 
 
-    ## Features of Mobile App
+## Features of Mobile App
 
 As the user opens up the app, they are greeted by a sign in/up page:
 
-![image-20211107090203255](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090203255.png)
+![image-20211107090203255](https://user-images.githubusercontent.com/33413616/140629942-aae33f01-a043-431a-8ad0-14832c1ee164.png)
 
 Since signing up is already implemented on the web server, we would not want to duplicate the function on the mobile app as well. The sign up button will bring the user directly to our register web page:
 
-![image-20211107090313360](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090313360.png)
+![image-20211107090313360](https://user-images.githubusercontent.com/33413616/140629939-7683c741-a291-4597-8e93-9d3262768d6a.png)
 
 All the user would have to do next is just to log in to get to the main page:
 
-![image-20211107090434702](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090434702.png)
+![image-20211107090434702](https://user-images.githubusercontent.com/33413616/140629931-3f4e352f-4bfa-4f3d-a8b5-355597a8f608.png)
 
 Once the user logs in with the correct credentials, they will be greeted by the main page of cases that were assigned to him:
 
@@ -385,71 +385,70 @@ Once the user logs in with the correct credentials, they will be greeted by the 
 - Cases are named YYYY-####, Y representing the year, # representing the case number of the year
 - The top right icon allows the user to log out of the app he wants to
 
-![image-20211107090642877](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107090642877.png)
+![image-20211107090642877](https://user-images.githubusercontent.com/33413616/140629928-7aa15c0a-8e1d-4a4b-b64e-797aa9646eed.png)
 
 Clicking on any of the cases above brings up the case information page, alongside the evidences that belong to a certain case:
 
-![image-20211107094813551](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107094813551.png)
+![image-20211107094813551](https://user-images.githubusercontent.com/33413616/140629925-f4db8b55-6b82-41b9-836e-5b613be37df6.png)
 
 If we click the top right icon in the case information page, we would be able to add new evidences into the case. The investigator would first need to take a photo of the evidence:
 
-![image-20211107095050416](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095050416.png)
+![image-20211107095050416](https://user-images.githubusercontent.com/33413616/140629924-3827cfde-a560-4039-b3be-d41c6becf15c.png)
 
 The investigator confirming the picture taken of the evidence
 
-![image-20211107095159445](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095159445.png)
+![image-20211107095159445](https://user-images.githubusercontent.com/33413616/140629920-548c9989-d880-47d8-bda0-15e29e079fe6.png)
 
 The investigator can choose whether to confirm the photo taken is what he wanted as well, if not he can always take the photo again:
 
-![image-20211107095449005](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095449005.png)
+![image-20211107095449005](https://user-images.githubusercontent.com/33413616/140629912-a7582c26-39cf-412c-b372-87dd1d670621.png)
 
 The investigator filling up contextual details about the evidence:
 
-![image-20211107095554066](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095554066.png)
+![image-20211107095554066](https://user-images.githubusercontent.com/33413616/140629907-e3acc187-b60b-41a9-b2f9-b1b6bbb07aef.png)
 
-![image-20211107095611519](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095611519.png)
+![image-20211107095611519](https://user-images.githubusercontent.com/33413616/140629903-41b4bf5e-f728-4586-bf3d-40c8748d7873.png)
 
 Once that is done, the investigator can press the "Submit Evidence!" button to post the photo and contextual details of the evidence into the web server:
-
-![image-20211107095733858](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095733858.png)
+    
+![image-20211107095733858](https://user-images.githubusercontent.com/33413616/140629899-10992e1d-8576-43f2-a38d-a15822fc0559.png)
 
 As the investigator can see, the new evidence has been added into the case:
 
-![image-20211107095907520](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107095907520.png)
+![image-20211107095907520](https://user-images.githubusercontent.com/33413616/140629895-cf8768cf-4391-4ac2-9765-7070abe2531e.png)
 
 If the investigator would like to view the evidence that is added into the case, he can just tap into it to view:
 
-![image-20211107100001004](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100001004.png)
+![image-20211107100001004](https://user-images.githubusercontent.com/33413616/140629891-d6d37853-5535-4a49-968d-5e300ee0a3df.png)
 
 If the investigator would like to take an evidence out for analysis, all he has to do is to select the specific evidence he wants to retrieve from the physical evidence storage:
 
-![image-20211107100129201](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100129201.png)
+![image-20211107100129201](https://user-images.githubusercontent.com/33413616/140629886-3f49c1a6-0394-480d-8e96-63f0ea21dadc.png)
 
 The investigator sees that the chain of custody of the evidence currently is in the evidence storage:
-
-![image-20211107100238498](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100238498.png)
+    
+![image-20211107100238498](https://user-images.githubusercontent.com/33413616/140629883-4d7b7ab9-628f-44d1-bee2-44fa498601e5.png)
 
 Next, he would just need to click on the top right icon in the screen shot above to proceed to taking photo of the evidence he is taking out of the evidence storage (Similar to the investigator adding a new evidence into the case):
 
-![image-20211107100341390](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100341390.png)
+![image-20211107100341390](https://user-images.githubusercontent.com/33413616/140629866-9fb9a676-c83d-4048-a7da-2cd6dd0fd960.png)
 
 The user can select one of the following as to what he would like to do with the evidence (For other reasons not stated in the drop down menu, select "Check Out of Storage" and provide the reason in the Description text):
-
-![image-20211107100502933](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100502933.png)
+    
+![image-20211107100502933](https://user-images.githubusercontent.com/33413616/140629862-54c39f27-8eea-47a5-b37e-401da920d575.png)
 
 Fill up the rest of the information and the investigator can take over the evidence:
-
-![image-20211107100556390](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100556390.png)
+    
+![image-20211107100556390](https://user-images.githubusercontent.com/33413616/140629859-caf04d00-fe75-4c30-9155-3629dcb752db.png)
 
 Once the investigator is done, he can press the "Modify Evidence Status!" button to post the information with regards to his take over (Photo of the evidence, reasons as to why he took over the evidence) into the web server.
-
-![image-20211107100809755](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107100809755.png)
+    
+![image-20211107100809755](https://user-images.githubusercontent.com/33413616/140629856-1fdbfa10-6ad6-4200-821f-482631299713.png)
 
 The investigator can see on the Evidence Chain of Custody timeline has been updated after the status was modified:
 
-![image-20211107101130481](C:\Users\jongb\AppData\Roaming\Typora\typora-user-images\image-20211107101130481.png)
+![image-20211107101130481](https://user-images.githubusercontent.com/33413616/140629845-50a4c72a-89b0-4ca5-b5f8-6631c5b2bb04.png)
 
-    
 
 
 
