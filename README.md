@@ -192,14 +192,12 @@ To connect our nodes to the ethereum python APIs, so as to perform actions on th
 
     `brownie networks add live byteablock host=http://x.x.x.x:yyyy chainid=zzzz name="ByteABlock Network"`
     
-3) Go back to the main project folder, whatever you have named it, and then run demo.py, which contains commented examples as to how to use the APIs
+3) Go back to the main project folder, to prepare to deploy the contract
 
 #### Deploying a contract
 To deploy a contract, first ensure that the contract ByteABlock.sol is in the brownie contracts folder first (ie ByteABlock/brownie/contracts)
 
-Then call the `deploy_and_get_abi()` helper function in demo.py while connected to the network.
-
-![Deploy_Helper](https://user-images.githubusercontent.com/20734215/140631848-3e3f5d54-8ea5-44d3-96dc-588db5d988e9.PNG)
+Then run deploy.py using `python3.7 deploy.py`
 
 Finally note down where the contract is deployed to, so we can get it from the blockchain in the app.py file 
 
