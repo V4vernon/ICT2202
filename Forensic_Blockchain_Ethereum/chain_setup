@@ -60,6 +60,8 @@ then
 		read nodePort
 		echo Enter HTTP IP Addr:
 		read httpIPAddr
+		echo Enter network you will be using:
+		read chainNet
 		echo Enter HTTP IP Port:
 		read httpIPPort
 		echo Enter Network ID:
@@ -69,8 +71,8 @@ then
 		echo Enter Gas Limit:
 		read gasLimit
 		#Save entered information for future usage
-		printf "%s,%s,%s,%s,%s,%s,%s\n" $nodeName $nodePort $httpIPAddr $httpIPPort $networkID $unlockAc $gasLimit>> saved_nodes.txt
-		nohup geth --datadir $nodeName --syncmode 'full' --port $nodePort --nat extip:$httpIPAddr --netrestrict 10.7.0.0/24 --http --http.addr $httpIPAddr --http.port $httpIPPort --http.api 'personal,eth,net,web3' --http.corsdomain '*' --networkid $networkID --miner.gasprice 0 --unlock $unlockAc --password $nodeName/password.txt --mine --allow-insecure-unlock --miner.gaslimit $gasLimit --nodiscover </dev/null &>/dev/null &
+		printf "%s,%s,%s,%s,%s,%s,%s,%s\n" $nodeName $nodePort $httpIPAddr $chainNet $httpIPPort $networkID $unlockAc $gasLimit>> saved_nodes.txt
+		nohup geth --datadir $nodeName --syncmode 'full' --port $nodePort --nat extip:$httpIPAddr --netrestrict $chainNet --http --http.addr $httpIPAddr --http.port $httpIPPort --http.api 'personal,eth,net,web3' --http.corsdomain '*' --networkid $networkID --miner.gasprice 0 --unlock $unlockAc --password $nodeName/password.txt --mine --allow-insecure-unlock --miner.gaslimit $gasLimit --nodiscover </dev/null &>/dev/null &
 	elif [[ $configResponse == "yes" ]];
 	then
 		echo Which node do you want to start?
@@ -82,7 +84,7 @@ then
 		if [[ ! -z $nodesArray ]];
 		then
 			IFS="," read -ra nodeValues <<< $(echo ${nodesArray[$nodeToStart-1]})
-			nohup geth --datadir ${nodeValues[0]} --syncmode 'full' --port ${nodeValues[1]} --nat extip:${nodeValues[2]} --netrestrict 10.7.0.0/24 --http --http.addr ${nodeValues[2]} --http.port ${nodeValues[3]} --http.api 'personal,eth,net,web3' --http.corsdomain '*' --networkid ${nodeValues[4]} --miner.gasprice 0 --unlock ${nodeValues[5]} --password ${nodeValues[0]}/password.txt --mine --allow-insecure-unlock --miner.gaslimit ${nodeValues[6]} --nodiscover </dev/null &>/dev/null &
+			nohup geth --datadir ${nodeValues[0]} --syncmode 'full' --port ${nodeValues[1]} --nat extip:${nodeValues[2]} --netrestrict ${nodeValues[3]} --http --http.addr ${nodeValues[2]} --http.port ${nodeValues[4]} --http.api 'personal,eth,net,web3' --http.corsdomain '*' --networkid ${nodeValues[5]} --miner.gasprice 0 --unlock ${nodeValues[6]} --password ${nodeValues[0]}/password.txt --mine --allow-insecure-unlock --miner.gaslimit ${nodeValues[7]} --nodiscover </dev/null &>/dev/null &
 		elif [[ -z $nodesArray ]];
 		then
 			echo "Configuration file is empty"
@@ -98,4 +100,3 @@ then
 	IFS="?" read -ra enodeValue <<< $(geth attach node1/geth.ipc --exec admin.nodeInfo.enode)
 	echo ${enodeValue[0]}\" 
 fi
-
