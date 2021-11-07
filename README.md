@@ -199,7 +199,7 @@ To deploy a contract, first ensure that the contract ByteABlock.sol, that is pre
 
 Then run deploy.py found again in the ethereum folder of this repository using `python3.7 deploy.py`
 
-Finally note down where the contract is deployed to, so we can get it from the blockchain in the app.py file 
+Finally note down where the contract is deployed to, as well as the abi.json file created so we can get it from the blockchain in the app.py file 
 
 *Sample of test contract deployment*
 
