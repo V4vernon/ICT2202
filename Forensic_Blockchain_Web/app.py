@@ -30,8 +30,8 @@ app.config['MYSQL_DB'] = 'forensic_blockchain'
 # Email server settings
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'ICT1002DigitalForensic@gmail.com'
-app.config['MAIL_PASSWORD'] = 'M2-NrAd)Yws2g*qf'
+app.config['MAIL_USERNAME'] = ''
+app.config['MAIL_PASSWORD'] = ''
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
